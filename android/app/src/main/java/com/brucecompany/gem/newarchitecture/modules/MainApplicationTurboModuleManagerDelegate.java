@@ -1,4 +1,4 @@
-package com.gemts.newarchitecture.modules;
+package com.brucecompany.gem.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

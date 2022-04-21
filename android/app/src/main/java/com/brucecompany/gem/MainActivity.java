@@ -1,4 +1,4 @@
-package com.gemts;
+package com.brucecompany.gem;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
