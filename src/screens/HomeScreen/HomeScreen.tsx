@@ -18,7 +18,6 @@ const Container = styled.View`
   background-color: ${(props: StyledProps) =>
     props.theme && props.theme.colors.deactive};
 `;
-
 const MainText = styled.Text`
   font-size: 20px;
   text-align: center;
@@ -42,5 +41,3 @@ const HomeScreen = ({}: Props) => {
 };
 
 export default HomeScreen;
-
-// const styles = StyleSheet.create({});
