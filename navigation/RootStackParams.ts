@@ -9,6 +9,4 @@ export type RootStackParamList = {
   StoreDetail: undefined;
   ServiceDisplay: undefined;
   ServiceDetail: undefined;
-  //   Profile: {userId: string};
-  //   Feed: {sort: 'latest' | 'top'} | undefined;
 };

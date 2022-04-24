@@ -17,9 +17,18 @@ import auth from '@react-native-firebase/auth';
 
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../navigation/RootStackParams';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
 // import FastImage from 'react-native-fast-image';
 
-const LoginScreen = props => {
+type loginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
+
+interface Props {}
+const LoginScreen = ({}: Props) => {
+  const navigation = useNavigation<loginScreenProp>();
+
   const [user, setUser] = useState();
 
   const [initializing, setInitializing] = useState(true);
@@ -58,9 +67,7 @@ const LoginScreen = props => {
     return auth()
       .signInWithCredential(googleCredential)
       .then(() => {
-        props.navigation.navigate({
-          name: '홈',
-        });
+        navigation.navigate('Home');
       });
   };
 
@@ -100,9 +107,7 @@ const LoginScreen = props => {
       const user = await auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-          props.navigation.navigate({
-            // name: '홈',
-          });
+          navigation.navigate('Home');
         })
         .catch(error => {
           if (error.code === 'auth/too-many-requests') {
@@ -196,18 +201,10 @@ const LoginScreen = props => {
             </TouchableOpacity>
 
             <View style={styles.optionsContainer}>
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate({
-                    name: '회원가입',
-                  })
-                }>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                 <Text>이메일로 3초만에 가입하기 {'>'}</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate({name: '비밀번호 재설정'})
-                }>
+              <TouchableOpacity onPress={() => navigation.navigate('PwReset')}>
                 <Text>비밀번호 재설정 {'>'}</Text>
               </TouchableOpacity>
             </View>
