@@ -1,4 +1,11 @@
-import {View, Text, TextInput, Button} from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import {useState, useEffect, useCallback} from 'react';
 import auth from '@react-native-firebase/auth';
@@ -18,6 +25,7 @@ const RegisterScreen = ({}: Props) => {
   const navigation = useNavigation<registerScreenProp>();
 
   const [initializing, setInitializing] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -35,6 +43,7 @@ const RegisterScreen = ({}: Props) => {
 
   const onSubmit = useCallback(async () => {
     console.log('버튼 누름');
+    setLoading(true);
     try {
       await auth()
         .createUserWithEmailAndPassword(email, password)
@@ -118,36 +127,49 @@ const RegisterScreen = ({}: Props) => {
   }, []);
 
   return (
-    <View>
-      <Text>RegisterScreen</Text>
-      <View>
-        <TextInput onChangeText={e => onChangeEmail(e)} placeholder="이메일" />
-        {email.length > 0 && <Text>{emailMassage}</Text>}
-      </View>
-      <View>
-        <TextInput
-          onChangeText={e => onChangePassword(e)}
-          placeholder="비밀번호"
-          secureTextEntry={true}
-        />
-        {password.length > 0 && <Text>{passwordMessage}</Text>}
-      </View>
-      <View>
-        <TextInput
-          onChangeText={e => onChangePasswordConfirm(e)}
-          secureTextEntry={true}
-          placeholder="비밀번호 확인"
-        />
-        {passwordConfirm.length > 0 && <Text>{passwordConfirmMessage}</Text>}
-      </View>
-      <View>
-        <Button
-          title="확인"
-          disabled={isEmail && isPassword && isPasswordConfirm ? false : true}
-          onPress={() => onSubmit()}
-        />
-      </View>
-    </View>
+    <ScrollView>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <View>
+          <Text>RegisterScreen</Text>
+          <View>
+            <TextInput
+              onChangeText={e => onChangeEmail(e)}
+              placeholder="이메일"
+            />
+            {email.length > 0 && <Text>{emailMassage}</Text>}
+          </View>
+          <View>
+            <TextInput
+              onChangeText={e => onChangePassword(e)}
+              placeholder="비밀번호"
+              secureTextEntry={true}
+            />
+            {password.length > 0 && <Text>{passwordMessage}</Text>}
+          </View>
+          <View>
+            <TextInput
+              onChangeText={e => onChangePasswordConfirm(e)}
+              secureTextEntry={true}
+              placeholder="비밀번호 확인"
+            />
+            {passwordConfirm.length > 0 && (
+              <Text>{passwordConfirmMessage}</Text>
+            )}
+          </View>
+          <View>
+            <Button
+              title="확인"
+              disabled={
+                isEmail && isPassword && isPasswordConfirm ? false : true
+              }
+              onPress={() => onSubmit()}
+            />
+          </View>
+        </View>
+      )}
+    </ScrollView>
   );
 };
 
