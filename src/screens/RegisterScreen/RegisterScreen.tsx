@@ -32,7 +32,7 @@ const RegisterScreen = ({}: Props) => {
   const [passwordConfirm, setPasswordConfirm] = useState<string>('second');
 
   // 오류메시지 상태저장
-  const [emailMassage, setEmailMassage] = useState<string>('');
+  const [emailMessage, setEmailMessage] = useState<string>('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
 
@@ -69,10 +69,10 @@ const RegisterScreen = ({}: Props) => {
     setEmail(emailCurrent);
 
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMassage('이메일 형식이 틀렸습니다! 다시 확인해주세요 ㅠㅠ');
+      setEmailMessage('이메일 형식이 틀렸습니다! 다시 확인해주세요 ㅠㅠ');
       setIsEmail(false);
     } else {
-      setEmailMassage('올바른 이메일 형식입니다! : -) ');
+      setEmailMessage('올바른 이메일 형식입니다! : -) ');
       setIsEmail(true);
     }
   }, []);
@@ -138,7 +138,7 @@ const RegisterScreen = ({}: Props) => {
               onChangeText={e => onChangeEmail(e)}
               placeholder="이메일"
             />
-            {email.length > 0 && <Text>{emailMassage}</Text>}
+            {email.length > 0 && <Text>{emailMessage}</Text>}
           </View>
           <View>
             <TextInput
