@@ -9,9 +9,10 @@ import {
   KeyboardAvoidingView,
   Alert,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 
 import auth from '@react-native-firebase/auth';
 
@@ -30,23 +31,18 @@ const LoginScreen = ({}: Props) => {
   const navigation = useNavigation<loginScreenProp>();
 
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const [initializing, setInitializing] = useState(true);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // 오류메시지 상태저장
+  const [emailMessage, setEmailMessage] = useState<string>('');
 
-  const [pwCheck, setPwCheck] = useState(false);
-  const [emailCheck, setEmailCheck] = useState(false);
-
-  const [emailErrMsg, setEmailErrMsg] = useState(false);
-  const [pwErrMsg, setPwErrMsg] = useState(false);
+  // 유효성 검사
+  const [isEmail, setIsEmail] = useState<boolean>(true);
 
   const scrollRef = useRef();
-
-  const onAuthStateChanged = user => {
-    setUser(user);
-  };
 
   useEffect(() => {
     console.log(auth().currentUser);
@@ -55,61 +51,42 @@ const LoginScreen = ({}: Props) => {
     }
   }, []);
 
+  // 로그아웃
   const handleLogout = () => {
     console.log('로그아웃');
     auth().signOut();
   };
 
-  const onGoogleButtonPress = async () => {
-    const {idToken} = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    console.log(googleCredential);
-    return auth()
-      .signInWithCredential(googleCredential)
-      .then(() => {
-        navigation.navigate('Home');
-      });
-  };
-
-  const checkEmail = e => {
-    var regExp =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    // 형식에 맞는 경우 true 리턴
-    const result = regExp.test(e);
-    {
-      result ? setEmailCheck(true) & setEmail(e) : setEmailCheck(false);
+  // 구글 로그인
+  const onGoogleButtonPress = useCallback(async () => {
+    setLoading(true);
+    try {
+      const {idToken} = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      return auth()
+        .signInWithCredential(googleCredential)
+        .then(() => {
+          navigation.navigate('Home');
+        });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
-  };
+  }, []);
 
-  const checkPassword = e => {
-    if (e !== '') {
-      setPassword(e);
-      setPwCheck(true);
-    } else {
-      setPwCheck(false);
-    }
-  };
-
-  const showErrMsg = () => {
-    setEmailErrMsg(!emailCheck);
-    setPwErrMsg(!pwCheck);
-  };
-
-  const clearErrMsg = () => {
-    setEmailErrMsg(false);
-    setPwErrMsg(false);
-  };
-
-  const handleSubmit = async () => {
-    if (pwCheck && emailCheck) {
-      console.log('로그인 시도');
-      clearErrMsg();
-      const user = await auth()
+  // 제출 -> handleSubmit
+  const handleSubmit = useCallback(async () => {
+    console.log('로그인 시도');
+    setLoading(true);
+    try {
+      await auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           navigation.navigate('Home');
         })
+        // Todo : catch를 두번 사용할 필요가 있을까? JS문 내에서 해결되는지 시도해볼것
         .catch(error => {
+          setLoading(false);
           if (error.code === 'auth/too-many-requests') {
             Alert.alert('잘못된 비밀번호', '비밀번호를 확인 해 주세요 ');
           }
@@ -124,14 +101,41 @@ const LoginScreen = ({}: Props) => {
           }
           console.log(error);
         });
-    } else {
-      showErrMsg();
+    } catch (error) {
+      console.log(error);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, password]);
 
   const handleScroll = () => {
     scrollRef.current.scrollToEnd({animated: 'true'});
   };
+
+  // 이메일 유효성 검사
+  const onChangeEmail = useCallback(
+    e => {
+      const emailRegex =
+        /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      const emailCurrent = e;
+      setEmail(emailCurrent);
+
+      if (!emailRegex.test(emailCurrent)) {
+        setEmailMessage('올바른 이메일 형식을 입력해주세요!');
+        setIsEmail(false);
+      } else {
+        setEmailMessage('');
+        setIsEmail(true);
+      }
+    },
+    [email],
+  );
+
+  const onChangePassword = useCallback(
+    e => {
+      setPassword(e);
+    },
+    [password],
+  );
 
   return (
     <ScrollView
@@ -153,17 +157,18 @@ const LoginScreen = ({}: Props) => {
               <Text style={styles.titleText}>로그인</Text>
             </View>
             <View style={styles.formContainer}>
+              {loading ? <ActivityIndicator /> : null}
               <TextInput
                 style={styles.textInput}
                 blurOnSubmit={true}
-                onChange={e => checkEmail(e.nativeEvent.text)}
+                onChangeText={e => onChangeEmail(e)}
                 autoCapitalize="none"
                 onFocus={handleScroll}
                 placeholder="이메일"
               />
-              {emailErrMsg ? (
+              {!isEmail ? (
                 <View style={styles.errorMsg_Container}>
-                  <Text style={styles.errorMsg}>🤭 이메일을 확인해 주세요</Text>
+                  <Text style={styles.errorMsg}>{emailMessage}</Text>
                 </View>
               ) : null}
 
@@ -174,15 +179,8 @@ const LoginScreen = ({}: Props) => {
                 autoCapitalize="none"
                 secureTextEntry={true}
                 onFocus={handleScroll}
-                onChange={e => checkPassword(e.nativeEvent.text)}
+                onChangeText={e => onChangePassword(e)}
               />
-              {pwErrMsg ? (
-                <View style={styles.errorMsg_Container}>
-                  <Text style={styles.errorMsg}>
-                    🤭 비밀번호를 확인해 주세요
-                  </Text>
-                </View>
-              ) : null}
             </View>
             <TouchableOpacity
               style={styles.loginBtn}
