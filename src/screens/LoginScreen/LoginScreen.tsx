@@ -141,6 +141,7 @@ const LoginScreen = ({}: Props) => {
           </View>
           <View style={styles.formContainer}>
             {loading ? <ActivityIndicator /> : null}
+            {/* Todo: 이메일 형식 체크 후 Input 박스 색 변화 */}
             <TextInput
               style={styles.textInput}
               blurOnSubmit={true}
@@ -149,11 +150,11 @@ const LoginScreen = ({}: Props) => {
               onFocus={handleScroll}
               placeholder="이메일"
             />
-            {!isEmail ? (
+            {/* {!isEmail ? (
               <View style={styles.errorMsg_Container}>
                 <Text style={styles.errorMsg}>{emailMessage}</Text>
               </View>
-            ) : null}
+            ) : null} */}
 
             <TextInput
               style={styles.textInput}

@@ -49,6 +49,7 @@ const HomeScreen = ({}: Props) => {
   }, []);
 
   console.log('홈화면 사용자: ', user);
+
   if (initializing) {
     return <ActivityIndicator />;
   }

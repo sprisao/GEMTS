@@ -18,7 +18,7 @@ const ProfileScreen = ({}: Props) => {
     try {
       await auth()
         .signOut()
-        .then(() => navigation.navigate('Login'));
+        .then(() => navigation.navigate('Home'));
     } catch (error) {
       console.log(error);
     }
