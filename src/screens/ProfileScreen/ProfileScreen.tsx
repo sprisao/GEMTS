@@ -1,12 +1,32 @@
-import {View, Text} from 'react-native';
+import {View, Button} from 'react-native';
 import React from 'react';
+import auth from '@react-native-firebase/auth';
 
-type Props = {};
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../navigation/RootStackParams';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-const ProfileScreen = (props: Props) => {
+type profileScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Profile'
+>;
+
+const ProfileScreen = ({}: Props) => {
+  const navigation = useNavigation<profileScreenProp>();
+
+  const handleLogout = async () => {
+    try {
+      await auth()
+        .signOut()
+        .then(() => navigation.navigate('Login'));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View>
-      <Text>ProfileScreen</Text>
+      <Button onPress={() => handleLogout()} title="로그아웃" />
     </View>
   );
 };
