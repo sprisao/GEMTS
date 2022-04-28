@@ -1,5 +1,7 @@
-import {Button} from 'react-native';
+import {ActivityIndicator, Button} from 'react-native';
 import React from 'react';
+import auth from '@react-native-firebase/auth';
+import {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../navigation/RootStackParams';
 import {useNavigation} from '@react-navigation/native';
@@ -29,12 +31,35 @@ type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 interface Props {}
 const HomeScreen = ({}: Props) => {
+  const [user, setUser] = useState();
+  const [initializing, setInitializing] = useState<boolean>(true);
   const navigation = useNavigation<homeScreenProp>();
+  // const subscriber = auth().currentUser;
+
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) {
+      setInitializing(false);
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  console.log('홈화면 사용자: ', user);
+  if (initializing) {
+    return <ActivityIndicator />;
+  }
   return (
     <ThemeProvider theme={Theme}>
       <Container>
         <MainText>HomeScreen</MainText>
-        <Button title="Login" onPress={() => navigation.navigate('Login')} />
+        <Button
+          title={!user ? 'Login' : 'Profile'}
+          onPress={() => navigation.navigate(!user ? 'Login' : 'Profile')}
+        />
       </Container>
     </ThemeProvider>
   );
