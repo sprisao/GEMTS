@@ -30,7 +30,6 @@ interface Props {}
 const LoginScreen = ({}: Props) => {
   const navigation = useNavigation<loginScreenProp>();
 
-  const [user, setUser] = useState();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>('');
@@ -44,19 +43,6 @@ const LoginScreen = ({}: Props) => {
 
   const scrollRef = useRef();
 
-  useEffect(() => {
-    console.log(auth().currentUser);
-    if (auth().currentUser) {
-      setUser(auth().currentUser);
-    }
-  }, []);
-
-  // 로그아웃
-  const handleLogout = () => {
-    console.log('로그아웃');
-    auth().signOut();
-  };
-
   // 구글 로그인
   const onGoogleButtonPress = useCallback(async () => {
     setLoading(true);
@@ -66,7 +52,7 @@ const LoginScreen = ({}: Props) => {
       return auth()
         .signInWithCredential(googleCredential)
         .then(() => {
-          navigation.navigate('Home');
+          navigation.navigate('Profile');
         });
     } catch (error) {
       setLoading(false);
@@ -143,71 +129,67 @@ const LoginScreen = ({}: Props) => {
       style={styles.screen}
       showsVerticalScrollIndicator={false}>
       <KeyboardAvoidingView style={styles.wrapper}>
-        {user ? (
-          <Button onPress={handleLogout} title="로그아웃" />
-        ) : (
-          <View style={styles.contentsContainer}>
-            <View style={styles.logoContainer}>
-              <Image
-                source={require('../../../assets/images/BI/logo.png')}
-                style={styles.logo}
-              />
-            </View>
-            <View style={styles.titleContainer}>
-              <Text style={styles.titleText}>로그인</Text>
-            </View>
-            <View style={styles.formContainer}>
-              {loading ? <ActivityIndicator /> : null}
-              <TextInput
-                style={styles.textInput}
-                blurOnSubmit={true}
-                onChangeText={e => onChangeEmail(e)}
-                autoCapitalize="none"
-                onFocus={handleScroll}
-                placeholder="이메일"
-              />
-              {!isEmail ? (
-                <View style={styles.errorMsg_Container}>
-                  <Text style={styles.errorMsg}>{emailMessage}</Text>
-                </View>
-              ) : null}
-
-              <TextInput
-                style={styles.textInput}
-                blurOnSubmit={true}
-                placeholder="비밀번호"
-                autoCapitalize="none"
-                secureTextEntry={true}
-                onFocus={handleScroll}
-                onChangeText={e => onChangePassword(e)}
-              />
-            </View>
-            <TouchableOpacity
-              style={styles.loginBtn}
-              onPress={() => handleSubmit()}>
-              <Text style={styles.loginBtn_Text}>로그인</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.loginBtn, styles.loginBtn_Google]}
-              onPress={() => onGoogleButtonPress()}>
-              <Image
-                source={require('../../../assets/images/SNS/google.png')}
-                style={styles.loginBtn_Logo}
-              />
-              <Text>Google 계정으로 계속하기</Text>
-            </TouchableOpacity>
-
-            <View style={styles.optionsContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text>이메일로 3초만에 가입하기 {'>'}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('PwReset')}>
-                <Text>비밀번호 재설정 {'>'}</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={styles.contentsContainer}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../../../assets/images/BI/logo.png')}
+              style={styles.logo}
+            />
           </View>
-        )}
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>로그인</Text>
+          </View>
+          <View style={styles.formContainer}>
+            {loading ? <ActivityIndicator /> : null}
+            <TextInput
+              style={styles.textInput}
+              blurOnSubmit={true}
+              onChangeText={e => onChangeEmail(e)}
+              autoCapitalize="none"
+              onFocus={handleScroll}
+              placeholder="이메일"
+            />
+            {!isEmail ? (
+              <View style={styles.errorMsg_Container}>
+                <Text style={styles.errorMsg}>{emailMessage}</Text>
+              </View>
+            ) : null}
+
+            <TextInput
+              style={styles.textInput}
+              blurOnSubmit={true}
+              placeholder="비밀번호"
+              autoCapitalize="none"
+              secureTextEntry={true}
+              onFocus={handleScroll}
+              onChangeText={e => onChangePassword(e)}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => handleSubmit()}>
+            <Text style={styles.loginBtn_Text}>로그인</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.loginBtn, styles.loginBtn_Google]}
+            onPress={() => onGoogleButtonPress()}>
+            <Image
+              source={require('../../../assets/images/SNS/google.png')}
+              style={styles.loginBtn_Logo}
+            />
+            <Text>Google 계정으로 계속하기</Text>
+          </TouchableOpacity>
+
+          <View style={styles.optionsContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+              <Text>이메일로 3초만에 가입하기 {'>'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('PwReset')}>
+              <Text>비밀번호 재설정 {'>'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </KeyboardAvoidingView>
     </ScrollView>
   );
