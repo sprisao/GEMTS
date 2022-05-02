@@ -2,8 +2,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import PlaceTabStack from './navigation/PlaceTabStack';
-import AccountTabStack from './navigation/AccountTabStack';
+import CommunityTabStack from './navigation/CommunityTabStack';
 import ChatTabStack from './navigation/ChatTabStack';
+import AccountTabStack from './navigation/AccountTabStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +23,7 @@ const App = () => {
               iconName = focused
                 ? 'ios-chatbubble-ellipses-sharp'
                 : 'ios-chatbubble-ellipses-outline';
-            } else if (route.name === 'Community') {
+            } else if (route.name === 'CommunityTab') {
               iconName = focused ? 'flash' : 'flash-outline';
             } else if (route.name === 'AccountTab') {
               iconName = focused ? 'person-circle' : 'person-circle-outline';
@@ -36,7 +37,7 @@ const App = () => {
           tabBarShowLabel: false,
         })}>
         <Tab.Screen name="PlaceTab" component={PlaceTabStack} />
-        <Tab.Screen name="Community" component={AccountTabStack} />
+        <Tab.Screen name="CommunityTab" component={CommunityTabStack} />
         <Tab.Screen
           name="ChatTab"
           component={ChatTabStack}

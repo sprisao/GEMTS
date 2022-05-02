@@ -23,7 +23,11 @@ const ChatTabStack = createNativeStackNavigator<RootStackParamList>();
 export default function StackNavigation() {
   return (
     <ChatTabStack.Navigator initialRouteName="ChatLobby">
-      <ChatTabStack.Screen name="Home" component={ChatLobby} options={{}} />
+      <ChatTabStack.Screen
+        name="ChatLobby"
+        component={ChatLobby}
+        options={{}}
+      />
     </ChatTabStack.Navigator>
   );
 }
