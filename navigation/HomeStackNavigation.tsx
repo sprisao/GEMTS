@@ -30,45 +30,45 @@ type RootStackParamList = {
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const RootStack = createNativeStackNavigator<RootStackParamList>();
+const HomeStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <RootStack.Navigator initialRouteName="Home">
-      <RootStack.Screen name="Home" component={HomeScreen} options={{}} />
-      <RootStack.Screen name="Login" component={LoginScreen} options={{}} />
-      <RootStack.Screen
+    <HomeStack.Navigator initialRouteName="Home">
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{}} />
+      <HomeStack.Screen name="Login" component={LoginScreen} options={{}} />
+      <HomeStack.Screen
         name="Register"
         component={RegisterScreen}
         options={{}}
       />
-      <RootStack.Screen name="PwReset" component={PwResetScreen} options={{}} />
-      <RootStack.Screen
+      <HomeStack.Screen name="PwReset" component={PwResetScreen} options={{}} />
+      <HomeStack.Screen
         name="StoreDisplay"
         component={StoreDisplayScreen}
         options={{}}
       />
-      <RootStack.Screen
+      <HomeStack.Screen
         name="StoreDetail"
         component={StoreDetailScreen}
         options={{}}
       />
-      <RootStack.Screen
+      <HomeStack.Screen
         name="ServiceDisplay"
         component={ServiceDisplayScreen}
         options={{}}
       />
-      <RootStack.Screen
+      <HomeStack.Screen
         name="ServiceDetail"
         component={ServiceDetailScreen}
         options={{}}
       />
-      <RootStack.Screen name="Profile" component={ProfileScreen} options={{}} />
-      <RootStack.Screen
+      <HomeStack.Screen name="Profile" component={ProfileScreen} options={{}} />
+      <HomeStack.Screen
         name="CurationDisplay"
         component={CurationDisplayScreen}
         options={{}}
       />
-    </RootStack.Navigator>
+    </HomeStack.Navigator>
   );
 }
