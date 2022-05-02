@@ -1,9 +1,5 @@
-export type RootStackParamList = {
+export type HomeStackParamList = {
   Home: undefined;
-  Login: undefined;
-  Register: undefined;
-  PwReset: undefined;
-  Profile: undefined;
   CurationDisplay: undefined;
   StoreDisplay: undefined;
   StoreDetail: undefined;
