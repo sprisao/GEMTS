@@ -3,12 +3,12 @@ import React from 'react';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {PlaceTabStackParamList} from '../../../navigation/PlaceTabStackParams';
+import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 import {useNavigation} from '@react-navigation/native';
 
 import {ThemeProvider} from 'styled-components';
 import styled, {DefaultTheme} from 'styled-components/native';
-import Theme from '../../styles/Theme';
+import Theme from '../../../styles/Theme';
 
 interface StyledProps {
   theme: DefaultTheme;

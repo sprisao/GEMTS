@@ -19,7 +19,7 @@ import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {useNavigation} from '@react-navigation/native';
-import {PlaceTabStackParamList} from '../../../navigation/PlaceTabStackParams';
+import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 // import FastImage from 'react-native-fast-image';
@@ -135,7 +135,7 @@ const LoginScreen = ({}: Props) => {
         <View style={styles.contentsContainer}>
           <View style={styles.logoContainer}>
             <Image
-              source={require('../../../assets/images/BI/logo.png')}
+              source={require('../../../../assets/images/BI/logo.png')}
               style={styles.logo}
             />
           </View>

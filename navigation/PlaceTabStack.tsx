@@ -2,15 +2,15 @@ import * as React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import HomeScreen from '../src/screens/HomeScreen/HomeScreen';
-import LoginScreen from '../src/screens/LoginScreen/LoginScreen';
-import RegisterScreen from '../src/screens/RegisterScreen/RegisterScreen';
-import PwResetScreen from '../src/screens/PwResetScreen/PwResetScreen';
-import ProfileScreen from '../src/screens/ProfileScreen/ProfileScreen';
-import StoreDisplayScreen from '../src/screens/StoreDisplayScreen/StoreDisplayScreen';
-import StoreDetailScreen from '../src/screens/StoreDetailScreen/StoreDetailScreen';
-import ServiceDisplayScreen from '../src/screens/ServiceDisplayScreen/ServiceDisplayScreen';
-import ServiceDetailScreen from '../src/screens/ServiceDetailScreen/ServiceDetailScreen';
+import HomeScreen from '../src/screens/Place/HomeScreen/HomeScreen';
+import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
+import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
+import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
+import ProfileScreen from '../src/screens/Account/ProfileScreen/ProfileScreen';
+import StoreDisplayScreen from '../src/screens/Place/StoreDisplayScreen/StoreDisplayScreen';
+import StoreDetailScreen from '../src/screens/Place/StoreDetailScreen/StoreDetailScreen';
+import ServiceDisplayScreen from '../src/screens/Place/ServiceDisplayScreen/ServiceDisplayScreen';
+import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/ServiceDetailScreen';
 import CurationDisplayScreen from '../src/screens/CurationDisplayScreen/CurationDisplayScreen';
 
 type RootStackParamList = {
