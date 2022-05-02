@@ -56,11 +56,7 @@ const HomeScreen = ({}: Props) => {
   return (
     <ThemeProvider theme={Theme}>
       <Container>
-        <MainText>HomeScreen</MainText>
-        <Button
-          title={!user ? 'Login' : 'Profile'}
-          onPress={() => navigation.navigate(!user ? 'Login' : 'Profile')}
-        />
+        <MainText>PlaceLobby</MainText>
       </Container>
     </ThemeProvider>
   );
