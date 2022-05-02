@@ -11,7 +11,7 @@ import StoreDisplayScreen from '../src/screens/Place/StoreDisplayScreen/StoreDis
 import StoreDetailScreen from '../src/screens/Place/StoreDetailScreen/StoreDetailScreen';
 import ServiceDisplayScreen from '../src/screens/Place/ServiceDisplayScreen/ServiceDisplayScreen';
 import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/ServiceDetailScreen';
-import CurationDisplayScreen from '../src/screens/CurationDisplayScreen/CurationDisplayScreen';
+import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/CurationDisplayScreen';
 
 type RootStackParamList = {
   Home: undefined;
@@ -26,53 +26,57 @@ type RootStackParamList = {
   ServiceDetail: undefined;
 };
 
-const ProfileStack = createNativeStackNavigator<RootStackParamList>();
+const AccountTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <ProfileStack.Navigator initialRouteName="Profile">
-      <ProfileStack.Screen name="Home" component={HomeScreen} options={{}} />
-      <ProfileStack.Screen name="Login" component={LoginScreen} options={{}} />
-      <ProfileStack.Screen
+    <AccountTabStack.Navigator initialRouteName="Profile">
+      <AccountTabStack.Screen name="Home" component={HomeScreen} options={{}} />
+      <AccountTabStack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{}}
+      />
+      <AccountTabStack.Screen
         name="Register"
         component={RegisterScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="PwReset"
         component={PwResetScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="StoreDisplay"
         component={StoreDisplayScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="StoreDetail"
         component={StoreDetailScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="ServiceDisplay"
         component={ServiceDisplayScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="ServiceDetail"
         component={ServiceDetailScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="Profile"
         component={ProfileScreen}
         options={{}}
       />
-      <ProfileStack.Screen
+      <AccountTabStack.Screen
         name="CurationDisplay"
         component={CurationDisplayScreen}
         options={{}}
       />
-    </ProfileStack.Navigator>
+    </AccountTabStack.Navigator>
   );
 }

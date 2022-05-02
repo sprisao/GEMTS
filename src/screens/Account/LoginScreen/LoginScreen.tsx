@@ -179,7 +179,7 @@ const LoginScreen = ({}: Props) => {
             style={[styles.loginBtn, styles.loginBtn_Google]}
             onPress={() => onGoogleButtonPress()}>
             <Image
-              source={require('../../../assets/images/SNS/google.png')}
+              source={require('../../../../assets/images/SNS/google.png')}
               style={styles.loginBtn_Logo}
             />
             <Text>Google 계정으로 계속하기</Text>

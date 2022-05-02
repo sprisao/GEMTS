@@ -11,7 +11,7 @@ import StoreDisplayScreen from '../src/screens/Place/StoreDisplayScreen/StoreDis
 import StoreDetailScreen from '../src/screens/Place/StoreDetailScreen/StoreDetailScreen';
 import ServiceDisplayScreen from '../src/screens/Place/ServiceDisplayScreen/ServiceDisplayScreen';
 import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/ServiceDetailScreen';
-import CurationDisplayScreen from '../src/screens/CurationDisplayScreen/CurationDisplayScreen';
+import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/CurationDisplayScreen';
 
 type RootStackParamList = {
   Home: undefined;
