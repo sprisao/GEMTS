@@ -3,7 +3,7 @@ import React from 'react';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {HomeStackParamList} from '../../../navigation/HomeStackParams';
+import {PlaceTabStackParamList} from '../../../navigation/PlaceTabStackParams';
 import {useNavigation} from '@react-navigation/native';
 
 import {ThemeProvider} from 'styled-components';
@@ -27,7 +27,7 @@ const MainText = styled.Text`
   color: white;
 `;
 
-type homeScreenProp = NativeStackNavigationProp<HomeStackParamList, 'Home'>;
+type homeScreenProp = NativeStackNavigationProp<PlaceTabStackParamList, 'Home'>;
 
 interface Props {}
 const HomeScreen = ({}: Props) => {

@@ -19,12 +19,15 @@ import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {useNavigation} from '@react-navigation/native';
-import {HomeStackParamList} from '../../../navigation/HomeStackParams';
+import {PlaceTabStackParamList} from '../../../navigation/PlaceTabStackParams';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 // import FastImage from 'react-native-fast-image';
 
-type loginScreenProp = NativeStackNavigationProp<HomeStackParamList, 'Login'>;
+type loginScreenProp = NativeStackNavigationProp<
+  PlaceTabStackParamList,
+  'Login'
+>;
 
 interface Props {}
 const LoginScreen = ({}: Props) => {

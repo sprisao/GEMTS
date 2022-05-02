@@ -30,45 +30,53 @@ type RootStackParamList = {
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const HomeStack = createNativeStackNavigator<RootStackParamList>();
+const PlaceTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <HomeStack.Navigator initialRouteName="Home">
-      <HomeStack.Screen name="Home" component={HomeScreen} options={{}} />
-      <HomeStack.Screen name="Login" component={LoginScreen} options={{}} />
-      <HomeStack.Screen
+    <PlaceTabStack.Navigator initialRouteName="Home">
+      <PlaceTabStack.Screen name="Home" component={HomeScreen} options={{}} />
+      <PlaceTabStack.Screen name="Login" component={LoginScreen} options={{}} />
+      <PlaceTabStack.Screen
         name="Register"
         component={RegisterScreen}
         options={{}}
       />
-      <HomeStack.Screen name="PwReset" component={PwResetScreen} options={{}} />
-      <HomeStack.Screen
+      <PlaceTabStack.Screen
+        name="PwReset"
+        component={PwResetScreen}
+        options={{}}
+      />
+      <PlaceTabStack.Screen
         name="StoreDisplay"
         component={StoreDisplayScreen}
         options={{}}
       />
-      <HomeStack.Screen
+      <PlaceTabStack.Screen
         name="StoreDetail"
         component={StoreDetailScreen}
         options={{}}
       />
-      <HomeStack.Screen
+      <PlaceTabStack.Screen
         name="ServiceDisplay"
         component={ServiceDisplayScreen}
         options={{}}
       />
-      <HomeStack.Screen
+      <PlaceTabStack.Screen
         name="ServiceDetail"
         component={ServiceDetailScreen}
         options={{}}
       />
-      <HomeStack.Screen name="Profile" component={ProfileScreen} options={{}} />
-      <HomeStack.Screen
+      <PlaceTabStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{}}
+      />
+      <PlaceTabStack.Screen
         name="CurationDisplay"
         component={CurationDisplayScreen}
         options={{}}
       />
-    </HomeStack.Navigator>
+    </PlaceTabStack.Navigator>
   );
 }

@@ -1,10 +1,9 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeStackNavigation from './navigation/HomeStackNavigation';
-import ProfileStackNavigation from './navigation/ProfileStackNavigation';
+import PlaceTabStack from './navigation/PlaceTabStack';
+import AccountTabStack from './navigation/AccountTabStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,14 +34,14 @@ const App = () => {
           headerShown: false,
           tabBarShowLabel: false,
         })}>
-        <Tab.Screen name="Home" component={HomeStackNavigation} />
-        <Tab.Screen name="Community" component={ProfileStackNavigation} />
+        <Tab.Screen name="Home" component={PlaceTabStack} />
+        <Tab.Screen name="Community" component={AccountTabStack} />
         <Tab.Screen
           name="Chats"
-          component={ProfileStackNavigation}
+          component={AccountTabStack}
           options={{tabBarBadge: 3}}
         />
-        <Tab.Screen name="Profile" component={ProfileStackNavigation} />
+        <Tab.Screen name="Profile" component={AccountTabStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

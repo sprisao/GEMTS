@@ -3,11 +3,11 @@ import React from 'react';
 import auth from '@react-native-firebase/auth';
 
 import {useNavigation} from '@react-navigation/native';
-import {HomeStackParamList} from '../../../navigation/HomeStackParams';
+import {PlaceTabStackParamList} from '../../../navigation/PlaceTabStackParams';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 type profileScreenProp = NativeStackNavigationProp<
-  HomeStackParamList,
+  PlaceTabStackParamList,
   'Profile'
 >;
 

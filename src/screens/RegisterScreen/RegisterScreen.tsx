@@ -12,11 +12,11 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import {useNavigation} from '@react-navigation/native';
-import {HomeStackParamList} from '../../../navigation/HomeStackParams';
+import {PlaceTabStackParamList} from '../../../navigation/PlaceTabStackParams';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 type registerScreenProp = NativeStackNavigationProp<
-  HomeStackParamList,
+  PlaceTabStackParamList,
   'Register'
 >;
 
