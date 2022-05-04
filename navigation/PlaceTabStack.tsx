@@ -3,6 +3,7 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import PlaceLobby from '../src/screens/Place/PlaceLobby/PlaceLobby';
+import PlaceSecondLobby from '../src/screens/Place/PlaceSecondLobby/PlaceSecondLobby';
 import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
@@ -15,6 +16,7 @@ import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/Cu
 
 type RootStackParamList = {
   PlaceLobby: undefined;
+  PlaceSecondLobby: undefined;
   Login: undefined;
   Register: undefined;
   PwReset: undefined;
@@ -34,13 +36,18 @@ const PlaceTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <PlaceTabStack.Navigator initialRouteName="Home">
+    <PlaceTabStack.Navigator initialRouteName="PlaceLobby">
       <PlaceTabStack.Screen
         name="PlaceLobby"
         component={PlaceLobby}
         options={{headerShown: false}}
       />
       <PlaceTabStack.Screen name="Login" component={LoginScreen} options={{}} />
+      <PlaceTabStack.Screen
+        name="PlaceSecondLobby"
+        component={PlaceSecondLobby}
+        options={{}}
+      />
       <PlaceTabStack.Screen
         name="Register"
         component={RegisterScreen}
