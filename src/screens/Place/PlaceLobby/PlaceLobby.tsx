@@ -40,11 +40,14 @@ const PlaceLobbyHeader = styled.View`
   border-bottom: solid, 1px;
 `;
 
-type homeScreenProp = NativeStackNavigationProp<PlaceTabStackParamList, 'Home'>;
+type placeLobbyProp = NativeStackNavigationProp<
+  PlaceTabStackParamList,
+  'PlaceLobby'
+>;
 
 interface Props {}
-const HomeScreen = ({}: Props) => {
-  const navigation = useNavigation<homeScreenProp>();
+const PlaceLobby = ({}: Props) => {
+  const navigation = useNavigation<placeLobbyProp>();
   // const subscriber = auth().currentUser;
 
   const FirstCategoryData = [
@@ -133,4 +136,4 @@ const HomeScreen = ({}: Props) => {
   );
 };
 
-export default HomeScreen;
+export default PlaceLobby;

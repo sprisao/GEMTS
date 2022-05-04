@@ -1,5 +1,5 @@
 export type PlaceTabStackParamList = {
-  Home: undefined;
+  PlaceLobby: undefined;
   CurationDisplay: undefined;
   StoreDisplay: undefined;
   StoreDetail: undefined;

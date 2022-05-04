@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import HomeScreen from '../src/screens/Place/PlaceLobby/PlaceLobby';
+import PlaceLobby from '../src/screens/Place/PlaceLobby/PlaceLobby';
 import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
@@ -14,7 +14,7 @@ import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/Servic
 import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/CurationDisplayScreen';
 
 type RootStackParamList = {
-  Home: undefined;
+  PlaceLobby: undefined;
   Login: undefined;
   Register: undefined;
   PwReset: undefined;
@@ -31,7 +31,11 @@ const AccountTabStack = createNativeStackNavigator<RootStackParamList>();
 export default function StackNavigation() {
   return (
     <AccountTabStack.Navigator initialRouteName="Profile">
-      <AccountTabStack.Screen name="Home" component={HomeScreen} options={{}} />
+      <AccountTabStack.Screen
+        name="PlaceLobby"
+        component={PlaceLobby}
+        options={{}}
+      />
       <AccountTabStack.Screen
         name="Login"
         component={LoginScreen}

@@ -3,7 +3,7 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import CommunityLobby from '../src/screens/Community/CommunityLobby';
-import HomeScreen from '../src/screens/Place/PlaceLobby/PlaceLobby';
+import PlaceLobby from '../src/screens/Place/PlaceLobby/PlaceLobby';
 import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
@@ -16,7 +16,7 @@ import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/Cu
 
 type RootStackParamList = {
   CommunityLobby: undefined;
-  Home: undefined;
+  PlaceLobby: undefined;
   Login: undefined;
   Register: undefined;
   PwReset: undefined;
@@ -39,8 +39,8 @@ export default function StackNavigation() {
         options={{}}
       />
       <CommunityTabStack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="PlaceLobby"
+        component={PlaceLobby}
         options={{}}
       />
       <CommunityTabStack.Screen
