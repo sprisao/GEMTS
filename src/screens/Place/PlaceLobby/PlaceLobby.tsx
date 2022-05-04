@@ -30,8 +30,8 @@ const MainText = styled.Text`
   color: white;
 `;
 
-const ScrollScreen = styled.ScrollView`
-  display: flex;
+const ContentScreen = styled.ScrollView`
+  flex: 1;
 `;
 
 const PlaceLobbyHeader = styled.View`
@@ -39,6 +39,51 @@ const PlaceLobbyHeader = styled.View`
   justify-content: center;
   border-bottom: solid, 1px;
 `;
+
+function ButtonLarge() {
+  return (
+    <View
+      style={{
+        flexDirection: 'column',
+        padding: 8,
+        backgroundColor: 'grey',
+        width: '49%',
+        height: 185,
+        borderRadius: 8,
+      }}>
+      <View style={{width: '100%', height: '50%', flexDirection: 'row'}}>
+        <View style={{width: '50%'}}>
+          <FastImage
+            style={{width: '100%', height: '100%'}}
+            source={require('../../../../assets/images/emojis/restaurants.png')}
+          />
+        </View>
+        <View>
+          <Text>프로필</Text>
+        </View>
+      </View>
+      <View
+        style={{
+          width: '100%',
+          height: '50%',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+        }}>
+        <Text style={{textAlign: 'right'}}>
+          원주의 {'\n'} 모든 카페를 한 눈에!
+        </Text>
+        <Text
+          style={{
+            textAlign: 'right',
+            fontSize: 28,
+            fontWeight: 'bold',
+          }}>
+          카페
+        </Text>
+      </View>
+    </View>
+  );
+}
 
 type placeLobbyProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
@@ -76,7 +121,7 @@ const PlaceLobby = ({}: Props) => {
   return (
     <ThemeProvider theme={Theme}>
       <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-        <ScrollView style={{flex: 1, backgroundColor: '#f3f3f3'}}>
+        <View style={{flex: 1}}>
           <PlaceLobbyHeader
             style={{
               shadowColor: '#000',
@@ -84,7 +129,6 @@ const PlaceLobby = ({}: Props) => {
               shadowOpacity: 0.15,
               shadowRadius: 3,
               elevation: 5,
-              marginBottom: 15,
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
               backgroundColor: 'white',
@@ -130,7 +174,21 @@ const PlaceLobby = ({}: Props) => {
               </View>
             </View>
           </PlaceLobbyHeader>
-        </ScrollView>
+          <ContentScreen>
+            <View
+              style={{
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: 10,
+                marginTop: 3,
+                paddingTop: 15,
+              }}>
+              <ButtonLarge />
+              <ButtonLarge />
+            </View>
+          </ContentScreen>
+        </View>
       </SafeAreaView>
     </ThemeProvider>
   );
