@@ -33,6 +33,7 @@ const MainText = styled.Text`
   margin: 10px;
   color: white;
 `;
+
 const ContentScreen = styled.ScrollView`
   flex: 1;
 `;
