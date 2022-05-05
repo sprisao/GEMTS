@@ -20,9 +20,6 @@ const PlaceSecondLobby = ({}: Props) => {
   const route = useRoute<placeSecondLobbyRouteProp>();
   const navigation = useNavigation<placeSecondLobbyNavigationProp>();
 
-  console.log('route :', route.params.firstCategoryId);
-  console.log('navigation', navigation);
-
   const firstCategory = route.params.firstCategoryId;
   return (
     <View>

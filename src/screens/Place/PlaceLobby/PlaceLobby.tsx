@@ -14,20 +14,7 @@ import FastImage from 'react-native-fast-image';
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 
-import {
-  EMOJI_BEAUTY,
-  EMOJI_CAFE,
-  EMOJI_CLASS,
-  EMOJI_CURATION,
-  EMOJI_EDUCATION,
-  EMOJI_FLOWERSHOP,
-  EMOJI_GYM,
-  EMOJI_KIDS,
-  EMOJI_PETS,
-  EMOJI_PUB,
-  EMOJI_RESTAURANT,
-  EMOJI_STUDIO,
-} from './EmojiExporter';
+import {Logo, FirstCategoryEmojis} from '../../../constants/Assets';
 
 interface StyledProps {
   theme: DefaultTheme;
@@ -72,7 +59,6 @@ function ButtonLarge({
   emoji,
   navigation,
 }: CategoryButtonProps) {
-  console.log(emoji);
   return (
     <TouchableOpacity
       onPress={() =>
@@ -90,7 +76,7 @@ function ButtonLarge({
       }}>
       <View style={{width: '100%', height: '50%', flexDirection: 'row'}}>
         <View style={{width: '50%'}}>
-          <FastImage style={{width: '100%', height: '100%'}} />
+          <FastImage style={{width: '100%', height: '100%'}} source={emoji} />
         </View>
         <View>
           <Text>프로필</Text>
@@ -158,7 +144,7 @@ const PlaceLobby = ({}: Props) => {
                   }}>
                   <FastImage
                     style={{width: '100%', height: '100%'}}
-                    source={require('../../../../assets/images/BI/LogoGrey.png')}
+                    source={Logo.color}
                   />
                 </View>
                 <View
@@ -196,14 +182,14 @@ const PlaceLobby = ({}: Props) => {
                 name={'맛집'}
                 message={'검색없이 한번에\n바로찾는 원주맛집'}
                 firstCategoryId={'restaurant'}
-                emoji={EMOJI_RESTAURANT}
+                emoji={FirstCategoryEmojis.restaurant}
                 navigation={navigation}
               />
               <ButtonLarge
                 name={'카페'}
                 message={'원주의\n모든 카페를 한 눈에!'}
                 firstCategoryId={'cafe'}
-                emoji={EMOJI_CAFE}
+                emoji={FirstCategoryEmojis.cafe}
                 navigation={navigation}
               />
             </View>
