@@ -1,5 +1,5 @@
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {View, Text, Button, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -33,7 +33,6 @@ const MainText = styled.Text`
   margin: 10px;
   color: white;
 `;
-
 const ContentScreen = styled.ScrollView`
   flex: 1;
 `;
@@ -45,7 +44,7 @@ const PlaceLobbyHeader = styled.View`
 `;
 
 type CategoryButtonProps = {
-  firstCategoryId: string;
+  id: string;
   name: string;
   message: string;
   emoji: string;
@@ -53,7 +52,7 @@ type CategoryButtonProps = {
 };
 
 function ButtonLarge({
-  firstCategoryId,
+  id,
   name,
   message,
   emoji,
@@ -63,7 +62,7 @@ function ButtonLarge({
     <TouchableOpacity
       onPress={() =>
         navigation.navigate('PlaceSecondLobby', {
-          firstCategoryId: firstCategoryId,
+          firstCategoryId: id,
         })
       }
       style={{
@@ -181,14 +180,14 @@ const PlaceLobby = ({}: Props) => {
               <ButtonLarge
                 name={'맛집'}
                 message={'검색없이 한번에\n바로찾는 원주맛집'}
-                firstCategoryId={'restaurant'}
+                id={'restaurant'}
                 emoji={FirstCategoryEmojis.restaurant}
                 navigation={navigation}
               />
               <ButtonLarge
                 name={'카페'}
                 message={'원주의\n모든 카페를 한 눈에!'}
-                firstCategoryId={'cafe'}
+                id={'cafe'}
                 emoji={FirstCategoryEmojis.cafe}
                 navigation={navigation}
               />
