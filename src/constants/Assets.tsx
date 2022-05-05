@@ -17,3 +17,9 @@ export const Logo = {
   bw: require('../../assets/images/BI/LogoGrey.png'),
   color: require('../../assets/images/BI/logo.png'),
 };
+
+export const SNS = {
+  Google: require('../../assets/images/SNS/google.png'),
+  Instagram: require('../../assets/images/SNS/INSTAGRAM.png'),
+  Naver: require('../../assets/images/SNS/NAVER.png'),
+};
