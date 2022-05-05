@@ -1,6 +1,7 @@
-import {View, Text, ScrollView, Button} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {View, Text, Button, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {useEffect, useState} from 'react';
+
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 import {useNavigation} from '@react-navigation/native';
@@ -8,9 +9,25 @@ import {useNavigation} from '@react-navigation/native';
 import {ThemeProvider} from 'styled-components';
 import styled, {DefaultTheme} from 'styled-components/native';
 import Theme from '../../../styles/Theme';
+
 import FastImage from 'react-native-fast-image';
+
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
+import {
+  EMOJI_BEAUTY,
+  EMOJI_CAFE,
+  EMOJI_CLASS,
+  EMOJI_CURATION,
+  EMOJI_EDUCATION,
+  EMOJI_FLOWERSHOP,
+  EMOJI_GYM,
+  EMOJI_KIDS,
+  EMOJI_PETS,
+  EMOJI_PUB,
+  EMOJI_RESTAURANT,
+  EMOJI_STUDIO,
+} from './EmojiExporter';
 
 interface StyledProps {
   theme: DefaultTheme;
@@ -40,9 +57,29 @@ const PlaceLobbyHeader = styled.View`
   border-bottom: solid, 1px;
 `;
 
-function ButtonLarge() {
+type CategoryButtonProps = {
+  firstCategoryId: string;
+  name: string;
+  message: string;
+  emoji: string;
+  navigation: placeLobbyProp;
+};
+
+function ButtonLarge({
+  firstCategoryId,
+  name,
+  message,
+  emoji,
+  navigation,
+}: CategoryButtonProps) {
+  console.log(emoji);
   return (
-    <View
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('PlaceSecondLobby', {
+          firstCategoryId: firstCategoryId,
+        })
+      }
       style={{
         flexDirection: 'column',
         padding: 8,
@@ -53,10 +90,7 @@ function ButtonLarge() {
       }}>
       <View style={{width: '100%', height: '50%', flexDirection: 'row'}}>
         <View style={{width: '50%'}}>
-          <FastImage
-            style={{width: '100%', height: '100%'}}
-            source={require('../../../../assets/images/emojis/restaurants.png')}
-          />
+          <FastImage style={{width: '100%', height: '100%'}} />
         </View>
         <View>
           <Text>프로필</Text>
@@ -69,19 +103,17 @@ function ButtonLarge() {
           justifyContent: 'flex-end',
           alignItems: 'flex-end',
         }}>
-        <Text style={{textAlign: 'right'}}>
-          원주의 {'\n'} 모든 카페를 한 눈에!
-        </Text>
+        <Text style={{textAlign: 'right'}}>{message}</Text>
         <Text
           style={{
             textAlign: 'right',
             fontSize: 28,
             fontWeight: 'bold',
           }}>
-          카페
+          {name}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -93,34 +125,6 @@ type placeLobbyProp = NativeStackNavigationProp<
 interface Props {}
 const PlaceLobby = ({}: Props) => {
   const navigation = useNavigation<placeLobbyProp>();
-  // const subscriber = auth().currentUser;
-
-  const move = () => {
-    navigation.navigate('PlaceSecondLobby', {firstCategoryId: '맛집'});
-  };
-
-  const FirstCategoryData = [
-    {
-      name: '맛집',
-      desc: '검색없이 한번에 바로찾는 원주맛집',
-      emoji: '../../../../assets/images/emojis/restaurants.png',
-    },
-    {
-      name: '카페',
-      desc: '원주의 \n 모든 카페를 한 눈에!',
-      emoji: '../../../../assets/images/emojis/cafe.png',
-    },
-    {
-      name: '젬 클래스',
-      desc: '우리동네 재능마켓 \n 다양한 클래스 정보',
-      emoji: '../../../../assets/images/emojis/gift.png',
-    },
-    {
-      name: '젬 큐레이션',
-      desc: '젬이 소개하는 \n 보석같은 장소들',
-      emoji: '../../../../assets/images/emojis/curation.png',
-    },
-  ];
 
   return (
     <ThemeProvider theme={Theme}>
@@ -188,10 +192,21 @@ const PlaceLobby = ({}: Props) => {
                 marginTop: 3,
                 paddingTop: 15,
               }}>
-              <ButtonLarge />
-              <ButtonLarge />
+              <ButtonLarge
+                name={'맛집'}
+                message={'검색없이 한번에\n바로찾는 원주맛집'}
+                firstCategoryId={'restaurant'}
+                emoji={EMOJI_RESTAURANT}
+                navigation={navigation}
+              />
+              <ButtonLarge
+                name={'카페'}
+                message={'원주의\n모든 카페를 한 눈에!'}
+                firstCategoryId={'cafe'}
+                emoji={EMOJI_CAFE}
+                navigation={navigation}
+              />
             </View>
-            <Button title="Move" onPress={() => move()} />
           </ContentScreen>
         </View>
       </SafeAreaView>
