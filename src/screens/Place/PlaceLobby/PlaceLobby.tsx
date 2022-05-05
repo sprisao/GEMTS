@@ -7,7 +7,7 @@ import Theme from '../../../styles/Theme';
 import {FirstCategoryEmojis} from '../../../constants/Assets';
 
 import PlaceLobbyHeader from './components/PlaceLobbyHeader';
-import {ButtonLarge} from './components/PlaceLobbyButtons';
+import {ButtonLarge, ButtonMedium} from './components/PlaceLobbyButtons';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -47,6 +47,20 @@ const PlaceLobby = ({}: Props) => {
               message={'원주의\n모든 카페를 한 눈에!'}
               id={'cafe'}
               emoji={FirstCategoryEmojis.cafe}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ButtonMedium
+              name={'젬 클래스'}
+              id={'service'}
+              message={'우리동네 재능마켓\n다양한 클래스'}
+              emoji={FirstCategoryEmojis.class}
+            />
+            <ButtonMedium
+              name={'젬 큐레이션'}
+              id={'curation'}
+              message={'젬이 소개하는\n보석같은 장소들'}
+              emoji={FirstCategoryEmojis.curation}
             />
           </ButtonWrapper>
         </ScrollView>
