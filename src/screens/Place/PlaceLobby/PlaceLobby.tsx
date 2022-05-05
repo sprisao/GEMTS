@@ -7,7 +7,11 @@ import Theme from '../../../styles/Theme';
 import {FirstCategoryEmojis} from '../../../constants/Assets';
 
 import PlaceLobbyHeader from './components/PlaceLobbyHeader';
-import {ButtonLarge, ButtonMedium} from './components/PlaceLobbyButtons';
+import {
+  ButtonLarge,
+  ButtonMedium,
+  ButtonSmall,
+} from './components/PlaceLobbyButtons';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -61,6 +65,58 @@ const PlaceLobby = ({}: Props) => {
               id={'curation'}
               message={'젬이 소개하는\n보석같은 장소들'}
               emoji={FirstCategoryEmojis.curation}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ButtonSmall
+              id="pub"
+              name="호프주점"
+              emoji={FirstCategoryEmojis.pub}
+              message={''}
+            />
+            <ButtonSmall
+              id="gym"
+              name="운동헬스"
+              emoji={FirstCategoryEmojis.gym}
+              message={''}
+            />
+            <ButtonSmall
+              id="beauty"
+              name="미용뷰티"
+              emoji={FirstCategoryEmojis.beauty}
+              message={''}
+            />
+            <ButtonSmall
+              id="studio"
+              name="사진"
+              emoji={FirstCategoryEmojis.studio}
+              message={''}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ButtonSmall
+              id="pets"
+              name="반려동물"
+              emoji={FirstCategoryEmojis.pets}
+              message={''}
+            />
+            <ButtonSmall
+              id="flowershop"
+              name="꽃"
+              emoji={FirstCategoryEmojis.flowershop}
+              message={''}
+            />
+            <ButtonSmall
+              id="kids"
+              name="키즈"
+              emoji={FirstCategoryEmojis.kids}
+              message={''}
+            />
+            <ButtonSmall
+              id="education"
+              name="교육학원"
+              emoji={FirstCategoryEmojis.education}
+              message={''}
             />
           </ButtonWrapper>
         </ScrollView>

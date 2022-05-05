@@ -113,3 +113,54 @@ export function ButtonMedium({id, name, message, emoji}: CategoryButtonProps) {
     </TouchableOpacity>
   );
 }
+
+export function ButtonSmall({id, name, emoji}: CategoryButtonProps) {
+  const navigation = useNavigation<LobbyButtonProp>();
+  return (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('PlaceSecondLobby', {
+          firstCategoryId: id,
+        })
+      }
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 8,
+        backgroundColor: 'grey',
+        width: '23.5%',
+        height: 80,
+        borderRadius: 8,
+        overflow: 'hidden',
+      }}>
+      <View
+        style={{
+          justifyContent: 'flex-end',
+          alignItems: 'flex-start',
+        }}>
+        <Text
+          style={{
+            textAlign: 'right',
+            fontSize: 16,
+            fontWeight: 'bold',
+          }}>
+          {name}
+        </Text>
+      </View>
+      <View
+        style={{
+          position: 'relative',
+          width: 40,
+          height: 38,
+          bottom: -10,
+          right: -40,
+          overflow: 'visible',
+        }}>
+        <FastImage
+          style={{width: '100%', height: '100%', overflow: 'visible'}}
+          source={emoji}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+}
