@@ -15,17 +15,17 @@ const SafeAreaView = styled.SafeAreaView`
 
 const ScrollView = styled.ScrollView`
   flex: 1;
+  padding-top: 15px;
 `;
 
 const ButtonWrapper = styled.View`
   display: flex;
   width: 100%;
+  margin-bottom: 8px;
   flex-direction: row;
   justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
-  margin-top: 3px;
-  padding-top: 15px;
 `;
 
 interface Props {}
