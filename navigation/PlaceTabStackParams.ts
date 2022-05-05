@@ -1,7 +1,8 @@
 export type PlaceTabStackParamList = {
   PlaceLobby: undefined;
+  PlaceSecondLobby: {firstCategoryId: string};
   CurationDisplay: undefined;
-  StoreDisplay: undefined;
+  StoreDisplay: {firstCategoryId: string; secondCategoryId: string};
   StoreDetail: undefined;
   ServiceDisplay: undefined;
   ServiceDetail: undefined;

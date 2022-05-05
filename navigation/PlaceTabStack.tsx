@@ -16,13 +16,13 @@ import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/Cu
 
 type RootStackParamList = {
   PlaceLobby: undefined;
-  PlaceSecondLobby: undefined;
+  PlaceSecondLobby: {firstCategoryId: string};
   Login: undefined;
   Register: undefined;
   PwReset: undefined;
   Profile: undefined;
   CurationDisplay: undefined;
-  StoreDisplay: undefined;
+  StoreDisplay: {firstCategoryId: string; secondCategoryId: string};
   StoreDetail: undefined;
   ServiceDisplay: undefined;
   ServiceDetail: undefined;

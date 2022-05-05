@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Button} from 'react-native';
 import React from 'react';
 import {useEffect, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -95,6 +95,10 @@ const PlaceLobby = ({}: Props) => {
   const navigation = useNavigation<placeLobbyProp>();
   // const subscriber = auth().currentUser;
 
+  const move = () => {
+    navigation.navigate('PlaceSecondLobby', {firstCategoryId: '맛집'});
+  };
+
   const FirstCategoryData = [
     {
       name: '맛집',
@@ -187,6 +191,7 @@ const PlaceLobby = ({}: Props) => {
               <ButtonLarge />
               <ButtonLarge />
             </View>
+            <Button title="Move" onPress={() => move()} />
           </ContentScreen>
         </View>
       </SafeAreaView>
