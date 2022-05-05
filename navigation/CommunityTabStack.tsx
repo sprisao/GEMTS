@@ -32,7 +32,9 @@ const CommunityTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <CommunityTabStack.Navigator initialRouteName="CommunityLobby">
+    <CommunityTabStack.Navigator
+      initialRouteName="CommunityLobby"
+      screenOptions={{contentStyle: {backgroundColor: '#FFFFFF'}}}>
       <CommunityTabStack.Screen
         name="CommunityLobby"
         component={CommunityLobby}

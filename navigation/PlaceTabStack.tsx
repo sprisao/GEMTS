@@ -34,7 +34,9 @@ const PlaceTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <PlaceTabStack.Navigator initialRouteName="PlaceLobby">
+    <PlaceTabStack.Navigator
+      initialRouteName="PlaceLobby"
+      screenOptions={{contentStyle: {backgroundColor: '#FFFFFF'}}}>
       <PlaceTabStack.Screen
         name="PlaceLobby"
         component={PlaceLobby}

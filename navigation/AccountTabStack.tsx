@@ -30,7 +30,9 @@ const AccountTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   return (
-    <AccountTabStack.Navigator initialRouteName="Profile">
+    <AccountTabStack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{contentStyle: {backgroundColor: '#FFFFFF'}}}>
       <AccountTabStack.Screen
         name="PlaceLobby"
         component={PlaceLobby}
