@@ -12,6 +12,7 @@ import {
   ButtonMedium,
   ButtonSmall,
 } from './components/PlaceLobbyButtons';
+import Banner from './components/Banner';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -66,6 +67,9 @@ const PlaceLobby = ({}: Props) => {
               message={'젬이 소개하는\n보석같은 장소들'}
               emoji={FirstCategoryEmojis.curation}
             />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Banner />
           </ButtonWrapper>
           <ButtonWrapper>
             <ButtonSmall
