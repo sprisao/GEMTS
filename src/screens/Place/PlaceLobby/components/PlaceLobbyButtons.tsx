@@ -1,6 +1,7 @@
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
+import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 import {PlaceTabStackParamList} from '../../../../../navigation/PlaceTabStackParams';
 import {useNavigation} from '@react-navigation/native';
@@ -14,6 +15,17 @@ type CategoryButtonProps = {
   emoji: string;
 };
 
+const ButtonLargeContainer = styled.TouchableOpacity`
+  flex-direction: column;
+  padding: 8px;
+  background-color: '#f8f8f8';
+  border-width: 0.7px;
+  border-color: '#dfdfdf';
+  width: 49%;
+  height: 0.22vh;
+  border-radius: 8px;
+`;
+
 export function ButtonLarge({id, name, message, emoji}: CategoryButtonProps) {
   const navigation = useNavigation<LobbyButtonProp>();
   return (
@@ -26,7 +38,9 @@ export function ButtonLarge({id, name, message, emoji}: CategoryButtonProps) {
       style={{
         flexDirection: 'column',
         padding: 8,
-        backgroundColor: 'grey',
+        backgroundColor: '#f8f8f8',
+        borderWidth: 0.7,
+        borderColor: '#dfdfdf',
         width: '49%',
         height: 185,
         borderRadius: 8,
@@ -76,7 +90,9 @@ export function ButtonMedium({id, name, message, emoji}: CategoryButtonProps) {
         display: 'flex',
         flexDirection: 'row',
         padding: 8,
-        backgroundColor: 'grey',
+        backgroundColor: '#f8f8f8',
+        borderWidth: 0.7,
+        borderColor: '#dfdfdf',
         width: '49%',
         height: 85,
         borderRadius: 8,
@@ -127,7 +143,9 @@ export function ButtonSmall({id, name, emoji}: CategoryButtonProps) {
         display: 'flex',
         flexDirection: 'column',
         padding: 8,
-        backgroundColor: 'grey',
+        backgroundColor: '#f8f8f8',
+        borderWidth: 0.7,
+        borderColor: '#dfdfdf',
         width: '23.5%',
         height: 80,
         borderRadius: 8,
