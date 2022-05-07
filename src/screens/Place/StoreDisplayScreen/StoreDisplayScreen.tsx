@@ -35,12 +35,16 @@ const StoreDisplayScreen = (props: Props) => {
   const getStores = async () => {
     setIsLoading(true);
 
-    const _Stores = storesRef.limit(15).onSnapshot(querySnapshot => {
+    const _Stores = storesRef.limit(100).onSnapshot(querySnapshot => {
       const stores = [];
       querySnapshot.forEach(documentSnapshot => {
-        stores.push({
-          ...documentSnapshot.data(),
-        });
+        console.log(documentSnapshot.data());
+        // 이곳이 첫번째 카테고리 필터링 부분
+        if (documentSnapshot.data().firstCategory[0] === '맛집') {
+          stores.push({
+            ...documentSnapshot.data(),
+          });
+        }
         setStores(stores);
         setIsLoading(false);
       });
@@ -48,8 +52,6 @@ const StoreDisplayScreen = (props: Props) => {
 
     return () => _Stores();
   };
-
-  console.log('subs', stores);
 
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
