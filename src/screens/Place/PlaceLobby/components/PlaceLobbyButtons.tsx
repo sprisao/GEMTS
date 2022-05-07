@@ -81,11 +81,13 @@ export function ButtonMedium({id, name, message, emoji}: CategoryButtonProps) {
   const navigation = useNavigation<LobbyButtonProp>();
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('PlaceSecondLobby', {
-          firstCategoryId: id,
-        })
-      }
+      onPress={() => {
+        if (id == 'curation') {
+          navigation.navigate('CurationLobby');
+        } else {
+          navigation.navigate('ServiceLobby');
+        }
+      }}
       style={{
         display: 'flex',
         flexDirection: 'row',

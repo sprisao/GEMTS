@@ -48,6 +48,16 @@ export default function StackNavigation() {
       />
       <PlaceTabStack.Screen name="Login" component={LoginScreen} options={{}} />
       <PlaceTabStack.Screen
+        name="ServiceLobby"
+        component={ServiceLobby}
+        options={{}}
+      />
+      <PlaceTabStack.Screen
+        name="CurationLobby"
+        component={CurationLobby}
+        options={{}}
+      />
+      <PlaceTabStack.Screen
         name="PlaceSecondLobby"
         component={PlaceSecondLobby}
         options={{}}

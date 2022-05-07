@@ -1,5 +1,8 @@
 import {View, Text} from 'react-native';
 import React from 'react';
+
+import {StoreSecondCat} from '../../../../data/StoreSecondCat';
+
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
