@@ -19,14 +19,21 @@ type placeSecondLobbyRouteProp = RouteProp<
 >;
 
 interface Props {}
+
 const PlaceSecondLobby = ({}: Props) => {
   const route = useRoute<placeSecondLobbyRouteProp>();
   const navigation = useNavigation<placeSecondLobbyNavigationProp>();
+  const SecondCategories = StoreSecondCat;
 
-  const firstCategory = route.params.firstCategoryId;
+  const givenFirstCategoryId = route.params.firstCategoryId;
+
   return (
     <View>
-      <Text>{firstCategory}</Text>
+      {SecondCategories.map(item => {
+        if (item.firstCategoryId == givenFirstCategoryId) {
+          return <Text id={item.id}>{item.title}</Text>;
+        }
+      })}
     </View>
   );
 };
