@@ -1,5 +1,8 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import {useState, useEffect} from 'react';
+import {ActivityIndicator, FlatList, View, Text} from 'react-native';
+
+import firestore from '@react-native-firebase/firestore';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
@@ -19,17 +22,48 @@ type StoreDisplayScreenRouteProp = RouteProp<
 type Props = {};
 
 const StoreDisplayScreen = (props: Props) => {
+  const [stores, setStores] = useState([]);
+  const [subscribers, setSubscribers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const Users = firestore()
+      .collection('stores')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+          });
+          setSubscribers(users);
+          setLoading(false);
+        });
+      });
+    return () => Users();
+  }, []);
+
+  console.log('subs', subscribers);
+
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
 
   const _firstCategoryId = route.params.firstCategoryId;
   const _initialFocus = route.params.initialFocus;
-  console.log(_initialFocus);
 
+  if (loading) {
+    return <ActivityIndicator />;
+  }
   return (
     <View>
-      <Text>{_firstCategoryId}</Text>
-      <Text>{_initialFocus}</Text>
+      <FlatList
+        data={subscribers}
+        renderItem={({item}) => (
+          <View>
+            <Text>{item.name}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 };
