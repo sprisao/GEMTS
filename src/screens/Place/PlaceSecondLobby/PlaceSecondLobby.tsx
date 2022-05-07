@@ -34,6 +34,12 @@ const PlaceSecondLobby = ({}: Props) => {
   const _renderItem = ({item}) => {
     return (
       <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('StoreDisplay', {
+            firstCategoryId: item.firstCategoryId,
+            initialFocus: item.id,
+          })
+        }
         style={{
           width: '49%',
           borderWidth: 0.5,
@@ -61,6 +67,12 @@ const PlaceSecondLobby = ({}: Props) => {
           paddingVertical: 20,
         }}>
         <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('StoreDisplay', {
+              firstCategoryId: givenFirstCategoryId,
+              initialFocus: 'all',
+            })
+          }
           style={{
             width: '100%',
             borderWidth: 0.5,
@@ -87,7 +99,7 @@ const PlaceSecondLobby = ({}: Props) => {
             marginBottom: 10,
           }}
           data={thisSecondCategories}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={item => item.id}
           renderItem={_renderItem}
           numColumns={2}
         />
