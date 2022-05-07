@@ -44,13 +44,13 @@ const PlaceLobby = ({}: Props) => {
             <ButtonLarge
               name={'맛집'}
               message={'검색없이 한번에\n바로찾는 원주맛집'}
-              id={'restaurant'}
+              id={'recxEYsUuSaVk3ge2'}
               emoji={FirstCategoryEmojis.restaurant}
             />
             <ButtonLarge
               name={'카페'}
               message={'원주의\n모든 카페를 한 눈에!'}
-              id={'cafe'}
+              id={'rec1nohULLWQVqXZD'}
               emoji={FirstCategoryEmojis.cafe}
             />
           </ButtonWrapper>
@@ -73,25 +73,25 @@ const PlaceLobby = ({}: Props) => {
           </ButtonWrapper>
           <ButtonWrapper>
             <ButtonSmall
-              id="pub"
+              id="rectbHPCk3LZzfu6w"
               name="호프주점"
               emoji={FirstCategoryEmojis.pub}
               message={''}
             />
             <ButtonSmall
-              id="gym"
+              id="recTQQfv194uE5O1K"
               name="운동헬스"
               emoji={FirstCategoryEmojis.gym}
               message={''}
             />
             <ButtonSmall
-              id="beauty"
+              id="recse3cQXji2BWlNu"
               name="미용뷰티"
               emoji={FirstCategoryEmojis.beauty}
               message={''}
             />
             <ButtonSmall
-              id="studio"
+              id="recqOzD4oznYyHeXS"
               name="사진"
               emoji={FirstCategoryEmojis.studio}
               message={''}
@@ -99,25 +99,25 @@ const PlaceLobby = ({}: Props) => {
           </ButtonWrapper>
           <ButtonWrapper>
             <ButtonSmall
-              id="pets"
+              id="rec9dQcEElsgcAsD7"
               name="반려동물"
               emoji={FirstCategoryEmojis.pets}
               message={''}
             />
             <ButtonSmall
-              id="flowershop"
+              id="recoF9HKKfA3ZSxSP"
               name="꽃"
               emoji={FirstCategoryEmojis.flowershop}
               message={''}
             />
             <ButtonSmall
-              id="kids"
+              id="recXj7vVqBBJttGd8"
               name="키즈"
               emoji={FirstCategoryEmojis.kids}
               message={''}
             />
             <ButtonSmall
-              id="education"
+              id="recz1ftDhPT8VADjf"
               name="교육학원"
               emoji={FirstCategoryEmojis.education}
               message={''}
