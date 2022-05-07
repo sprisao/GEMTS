@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import PlaceLobby from '../src/screens/Place/PlaceLobby/PlaceLobby';
 import PlaceSecondLobby from '../src/screens/Place/PlaceSecondLobby/PlaceSecondLobby';
+import ServiceLobby from '../src/screens/Place/PlaceSecondLobby/ServiceLobby';
+import CurationLobby from '../src/screens/Place/PlaceSecondLobby/CurationLobby';
 import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
@@ -17,6 +19,8 @@ import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/Cu
 type RootStackParamList = {
   PlaceLobby: undefined;
   PlaceSecondLobby: {firstCategoryId: string};
+  ServiceLobby: undefined;
+  CurationLobby: undefined;
   Login: undefined;
   Register: undefined;
   PwReset: undefined;
