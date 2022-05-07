@@ -26,8 +26,6 @@ const StoreDisplayScreen = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastDoc, setLastDoc] = useState(null);
 
-  const storesRef = firestore().collection('stores');
-
   useEffect(() => {
     getStores();
   }, []);
@@ -35,16 +33,17 @@ const StoreDisplayScreen = (props: Props) => {
   const getStores = async () => {
     setIsLoading(true);
 
+    const storesRef = firestore()
+      .collection('stores')
+      // 이곳이 첫번째 카테고리 필터링 부분
+      .where('firstCategory', 'array-contains', '맛집');
+
     const _Stores = storesRef.limit(100).onSnapshot(querySnapshot => {
       const stores = [];
       querySnapshot.forEach(documentSnapshot => {
-        console.log(documentSnapshot.data());
-        // 이곳이 첫번째 카테고리 필터링 부분
-        if (documentSnapshot.data().firstCategory[0] === '맛집') {
-          stores.push({
-            ...documentSnapshot.data(),
-          });
-        }
+        stores.push({
+          ...documentSnapshot.data(),
+        });
         setStores(stores);
         setIsLoading(false);
       });
