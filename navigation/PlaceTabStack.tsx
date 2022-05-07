@@ -26,7 +26,11 @@ type RootStackParamList = {
   PwReset: undefined;
   Profile: undefined;
   CurationDisplay: undefined;
-  StoreDisplay: {firstCategoryId: string; secondCategoryId: string};
+  StoreDisplay: {
+    initialFocus: string;
+    firstCategoryId: string;
+    secondCategoryId: string;
+  };
   StoreDetail: undefined;
   ServiceDisplay: undefined;
   ServiceDetail: undefined;
