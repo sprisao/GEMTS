@@ -23,27 +23,33 @@ type Props = {};
 
 const StoreDisplayScreen = (props: Props) => {
   const [stores, setStores] = useState([]);
-  const [subscribers, setSubscribers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [lastDoc, setLastDoc] = useState(null);
+
+  const storesRef = firestore().collection('stores');
 
   useEffect(() => {
-    const Users = firestore()
-      .collection('stores')
-      .onSnapshot(querySnapshot => {
-        const users = [];
-
-        querySnapshot.forEach(documentSnapshot => {
-          users.push({
-            ...documentSnapshot.data(),
-          });
-          setSubscribers(users);
-          setLoading(false);
-        });
-      });
-    return () => Users();
+    getStores();
   }, []);
 
-  console.log('subs', subscribers);
+  const getStores = async () => {
+    setIsLoading(true);
+
+    const _Stores = storesRef.limit(15).onSnapshot(querySnapshot => {
+      const stores = [];
+      querySnapshot.forEach(documentSnapshot => {
+        stores.push({
+          ...documentSnapshot.data(),
+        });
+        setStores(stores);
+        setIsLoading(false);
+      });
+    });
+
+    return () => _Stores();
+  };
+
+  console.log('subs', stores);
 
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
@@ -51,13 +57,13 @@ const StoreDisplayScreen = (props: Props) => {
   const _firstCategoryId = route.params.firstCategoryId;
   const _initialFocus = route.params.initialFocus;
 
-  if (loading) {
+  if (isLoading) {
     return <ActivityIndicator />;
   }
   return (
     <View>
       <FlatList
-        data={subscribers}
+        data={stores}
         renderItem={({item}) => (
           <View>
             <Text>{item.name}</Text>
