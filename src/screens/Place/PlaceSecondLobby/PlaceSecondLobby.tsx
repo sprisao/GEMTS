@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {TouchableOpacity, View, Text, FlatList} from 'react-native';
 import React from 'react';
 
 import {StoreSecondCat} from '../../../../data/StoreSecondCat';
@@ -23,17 +23,75 @@ interface Props {}
 const PlaceSecondLobby = ({}: Props) => {
   const route = useRoute<placeSecondLobbyRouteProp>();
   const navigation = useNavigation<placeSecondLobbyNavigationProp>();
-  const SecondCategories = StoreSecondCat;
 
+  const allSecondCategory = StoreSecondCat;
   const givenFirstCategoryId = route.params.firstCategoryId;
+
+  const thisSecondCategories = allSecondCategory.filter(
+    item => item.firstCategoryId === givenFirstCategoryId,
+  );
+
+  const _renderItem = ({item}) => {
+    return (
+      <TouchableOpacity
+        style={{
+          width: '49%',
+          borderWidth: 0.5,
+          borderColor: '#dfdfdf',
+          borderRadius: 11,
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingHorizontal: 14,
+            paddingVertical: 12,
+          }}>
+          <Text style={{marginRight: 6}}>{item.emoji}</Text>
+          <Text>{item.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View>
-      {SecondCategories.map(item => {
-        if (item.firstCategoryId == givenFirstCategoryId) {
-          return <Text id={item.id}>{item.title}</Text>;
-        }
-      })}
+      <View
+        style={{
+          paddingHorizontal: 10,
+          paddingVertical: 20,
+        }}>
+        <TouchableOpacity
+          style={{
+            width: '100%',
+            borderWidth: 0.5,
+            borderColor: '#dfdfdf',
+            borderRadius: 11,
+            marginBottom: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingHorizontal: 14,
+              paddingVertical: 12,
+            }}>
+            <Text style={{marginRight: 6}}>🅰️</Text>
+            <Text>전체</Text>
+          </View>
+        </TouchableOpacity>
+        <FlatList
+          columnWrapperStyle={{
+            flex: 1,
+            justifyContent: 'space-between',
+            marginBottom: 10,
+          }}
+          data={thisSecondCategories}
+          keyExtractor={(item, index) => item.id}
+          renderItem={_renderItem}
+          numColumns={2}
+        />
+      </View>
     </View>
   );
 };
