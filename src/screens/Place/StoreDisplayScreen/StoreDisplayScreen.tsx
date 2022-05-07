@@ -35,18 +35,24 @@ const StoreDisplayScreen = (props: Props) => {
 
     const storesRef = firestore()
       .collection('stores')
+      // 'preRating'에 따라 내림차순 정렬
+      .orderBy('preRating', 'desc')
       // 이곳이 첫번째 카테고리 필터링 부분
-      .where('firstCategory', 'array-contains', '맛집');
+      .where('firstCategory', 'array-contains', '카페');
 
     const _Stores = storesRef.limit(100).onSnapshot(querySnapshot => {
       const stores = [];
-      querySnapshot.forEach(documentSnapshot => {
-        stores.push({
-          ...documentSnapshot.data(),
+      try {
+        querySnapshot.forEach(documentSnapshot => {
+          stores.push({
+            ...documentSnapshot.data(),
+          });
+          setStores(stores);
+          setIsLoading(false);
         });
-        setStores(stores);
-        setIsLoading(false);
-      });
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     return () => _Stores();
