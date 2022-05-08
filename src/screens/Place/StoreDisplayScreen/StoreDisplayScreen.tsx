@@ -8,6 +8,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
 
 type StoreDisplayScreenNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
@@ -71,14 +72,41 @@ const StoreDisplayScreen = (props: Props) => {
 
   return (
     <View>
-      <FlatList
-        data={stores}
-        renderItem={({item}) => (
-          <View>
-            <Text>{item.name}</Text>
-          </View>
-        )}
-      />
+      <View style={{paddingHorizontal: 8, paddingTop: 10}}>
+        <FlatList
+          data={stores}
+          numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginBottom: 10,
+          }}
+          initialNumToRender={10}
+          renderItem={({item}) => (
+            <View style={{width: '48.5%'}}>
+              <View
+                style={{
+                  width: '100%',
+                  height: 185,
+                  borderRadius: 3,
+                  overflow: 'hidden',
+                }}>
+                <FastImage
+                  style={{width: '100%', height: '100%'}}
+                  source={{uri: item.images[0].url}}
+                />
+              </View>
+              <View style={{marginTop: 5}}>
+                <Text>{item.shortAddr}</Text>
+                <Text style={{fontSize: 20}}>{item.name}</Text>
+                <Text>프로필</Text>
+                <Text>
+                  영업시간 : {item.openHour} ~ {item.closeHour}
+                </Text>
+              </View>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
