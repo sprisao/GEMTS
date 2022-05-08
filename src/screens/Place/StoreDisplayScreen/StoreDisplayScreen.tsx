@@ -27,20 +27,18 @@ type StoreDisplayScreenRouteProp = RouteProp<
   'PlaceSecondLobby'
 >;
 
-type Props = {};
+interface Props {}
 
-const StoreDisplayScreen = (props: Props) => {
+const StoreDisplayScreen = ({}: Props) => {
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
 
   const _firstCategoryId = route.params.firstCategoryId;
   const _secondCategories = route.params.secondCategories;
-  console.log(route.params);
   const _initialFocus = route.params.initialFocus;
 
   const [stores, setStores] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [lastDoc, setLastDoc] = useState(null);
   const [currentFocus, setCurrentFocus] = useState(_initialFocus);
 
   useEffect(() => {
@@ -83,7 +81,6 @@ const StoreDisplayScreen = (props: Props) => {
   function onCategorySelect(e) {
     setCurrentFocus(e);
   }
-  console.log(currentFocus);
 
   return (
     <View style={{flex: 1}}>
@@ -113,6 +110,7 @@ const StoreDisplayScreen = (props: Props) => {
           return (
             <TouchableOpacity
               onPress={() => onCategorySelect(item.id)}
+              key={item.id}
               style={{
                 paddingHorizontal: 15,
                 paddingVertical: 14,
