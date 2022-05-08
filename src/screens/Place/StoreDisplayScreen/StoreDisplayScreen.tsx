@@ -26,6 +26,12 @@ const StoreDisplayScreen = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [lastDoc, setLastDoc] = useState(null);
 
+  const route = useRoute<StoreDisplayScreenRouteProp>();
+  const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
+
+  const _firstCategoryId = route.params.firstCategoryId;
+  const _initialFocus = route.params.initialFocus;
+
   useEffect(() => {
     getStores();
   }, []);
@@ -34,13 +40,14 @@ const StoreDisplayScreen = (props: Props) => {
     setIsLoading(true);
 
     const storesRef = firestore()
-      .collection('stores')
-      // 'preRating'에 따라 내림차순 정렬
+      .collection('stores_new')
       .orderBy('preRating', 'desc')
-      // 이곳이 첫번째 카테고리 필터링 부분
-      .where('firstCategory', 'array-contains', '카페');
+      .where('firstCategoryId', 'array-contains', _firstCategoryId);
 
-    const _Stores = storesRef.limit(100).onSnapshot(querySnapshot => {
+    function onError(error) {
+      console.log(error);
+    }
+    const _Stores = await storesRef.onSnapshot(querySnapshot => {
       const stores = [];
       try {
         querySnapshot.forEach(documentSnapshot => {
@@ -53,20 +60,15 @@ const StoreDisplayScreen = (props: Props) => {
       } catch (error) {
         console.log(error);
       }
-    });
+    }, onError);
 
     return () => _Stores();
   };
 
-  const route = useRoute<StoreDisplayScreenRouteProp>();
-  const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
-
-  const _firstCategoryId = route.params.firstCategoryId;
-  const _initialFocus = route.params.initialFocus;
-
   if (isLoading) {
     return <ActivityIndicator />;
   }
+
   return (
     <View>
       <FlatList
