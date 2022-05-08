@@ -38,6 +38,7 @@ const PlaceSecondLobby = ({}: Props) => {
           navigation.navigate('StoreDisplay', {
             firstCategoryId: item.firstCategoryId,
             initialFocus: item.id,
+            secondCategoryId: item.id,
             secondCategories: thisSecondCategories,
           })
         }
@@ -70,8 +71,10 @@ const PlaceSecondLobby = ({}: Props) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('StoreDisplay', {
-              firstCategoryId: givenFirstCategoryId,
+              firstCategoryId: 'none',
               initialFocus: 'all',
+              secondCategoryId: 'all',
+              secondCategories: thisSecondCategories,
             })
           }
           style={{

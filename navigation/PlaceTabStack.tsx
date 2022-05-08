@@ -30,7 +30,7 @@ type RootStackParamList = {
     initialFocus: string;
     firstCategoryId: string;
     secondCategoryId: string;
-    secondCategories: string[];
+    secondCategories: object;
   };
   StoreDetail: undefined;
   ServiceDisplay: undefined;
