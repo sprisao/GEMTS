@@ -8,6 +8,7 @@ export type PlaceTabStackParamList = {
     initialFocus: string;
     firstCategoryId: string;
     secondCategoryId: string;
+    secondCategories: string[];
   };
   StoreDetail: undefined;
   ServiceDisplay: undefined;

@@ -38,6 +38,7 @@ const PlaceSecondLobby = ({}: Props) => {
           navigation.navigate('StoreDisplay', {
             firstCategoryId: item.firstCategoryId,
             initialFocus: item.id,
+            secondCategories: thisSecondCategories,
           })
         }
         style={{
