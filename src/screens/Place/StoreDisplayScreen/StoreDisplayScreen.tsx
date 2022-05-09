@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef, useMemo} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -77,8 +77,6 @@ const StoreDisplayScreen = ({}: Props) => {
 
   function onCategorySelect(e) {
     setCurrentFocus(e);
-    console.log(tabRef.current.scrollToItem(e));
-    tabRef.current.scrollToItem(e);
   }
 
   function allTab() {
@@ -98,10 +96,10 @@ const StoreDisplayScreen = ({}: Props) => {
     );
   }
 
-  function tabs(item) {
+  function tabs({item, index}) {
     return (
       <TouchableOpacity
-        onPress={() => onCategorySelect(item)}
+        onPress={() => onCategorySelect(item.id)}
         key={item.id}
         style={{
           paddingHorizontal: 15,
@@ -117,6 +115,8 @@ const StoreDisplayScreen = ({}: Props) => {
     );
   }
 
+  const momoizedTabs = useMemo(() => tabs, [tabs]);
+
   return (
     <View style={{}}>
       <FlatList
@@ -128,10 +128,10 @@ const StoreDisplayScreen = ({}: Props) => {
         ListHeaderComponent={allTab}
         getItemLayout={(data, index) => ({
           length: 75,
-          offset: 75 * index,
+          offset: 75 * (index + 1),
           index,
         })}
-        renderItem={({item}) => tabs(item)}
+        renderItem={momoizedTabs}
       />
       <FlatList
         data={stores}
@@ -145,7 +145,8 @@ const StoreDisplayScreen = ({}: Props) => {
         initialNumToRender={10}
         maxToRenderPerBatch={30}
         renderItem={({item}) => (
-          <View style={{width: '48.5%'}}>
+          // 여기서 나중에 높이 조절해야함 -> 스타일링 끝나고 마무리는 fixed height 설정 -> 렌더링 속도 업!
+          <View style={{width: '48.5%', height: 265}}>
             <View
               style={{
                 width: '100%',
