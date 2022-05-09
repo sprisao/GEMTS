@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -40,6 +40,8 @@ const StoreDisplayScreen = ({}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentFocus, setCurrentFocus] = useState(_initialFocus);
 
+  const tabRef = useRef();
+
   useEffect(() => {
     getStores();
   }, []);
@@ -75,6 +77,8 @@ const StoreDisplayScreen = ({}: Props) => {
 
   function onCategorySelect(e) {
     setCurrentFocus(e);
+    console.log(tabRef.current.scrollToItem(e));
+    tabRef.current.scrollToItem(e);
   }
 
   function allTab() {
@@ -97,7 +101,7 @@ const StoreDisplayScreen = ({}: Props) => {
   function tabs(item) {
     return (
       <TouchableOpacity
-        onPress={() => onCategorySelect(item.id)}
+        onPress={() => onCategorySelect(item)}
         key={item.id}
         style={{
           paddingHorizontal: 15,
@@ -116,10 +120,17 @@ const StoreDisplayScreen = ({}: Props) => {
   return (
     <View style={{}}>
       <FlatList
+        ref={tabRef}
         style={{backgroundColor: 'blue', height: 50, marginBottom: 8}}
-        horizontal={true}
+        horizontal
         data={_secondCategories}
+        showsHorizontalScrollIndicator={false}
         ListHeaderComponent={allTab}
+        getItemLayout={(data, index) => ({
+          length: 75,
+          offset: 75 * index,
+          index,
+        })}
         renderItem={({item}) => tabs(item)}
       />
       <FlatList
