@@ -5,7 +5,6 @@ import {
   FlatList,
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 
@@ -74,61 +73,58 @@ const StoreDisplayScreen = ({}: Props) => {
     return () => _Stores();
   };
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
   function onCategorySelect(e) {
     setCurrentFocus(e);
   }
 
-  return (
-    <View style={{flex: 1}}>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
+  function allTab() {
+    return (
+      <TouchableOpacity
+        onPress={() => onCategorySelect('all')}
         style={{
-          paddingHorizontal: -8,
-          height: 50,
-          backgroundColor: 'blue',
-          marginBottom: 8,
+          paddingHorizontal: 15,
+          paddingVertical: 14,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
-        <TouchableOpacity
-          onPress={() => onCategorySelect('all')}
-          style={{
-            paddingHorizontal: 15,
-            paddingVertical: 14,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={currentFocus == 'all' ? {color: 'red'} : {color: 'white'}}>
-            전체
-          </Text>
-        </TouchableOpacity>
-        {_secondCategories.map(item => {
-          return (
-            <TouchableOpacity
-              onPress={() => onCategorySelect(item.id)}
-              key={item.id}
-              style={{
-                paddingHorizontal: 15,
-                paddingVertical: 14,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={
-                  currentFocus == item.id ? {color: 'red'} : {color: 'white'}
-                }>
-                {item.title}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+        <Text style={currentFocus == 'all' ? {color: 'red'} : {color: 'white'}}>
+          전체
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+  function tabs(item) {
+    return (
+      <TouchableOpacity
+        onPress={() => onCategorySelect(item.id)}
+        key={item.id}
+        style={{
+          paddingHorizontal: 15,
+          paddingVertical: 14,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={currentFocus == item.id ? {color: 'red'} : {color: 'white'}}>
+          {item.title}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View style={{}}>
+      <FlatList
+        style={{backgroundColor: 'blue', height: 50, marginBottom: 8}}
+        horizontal={true}
+        data={_secondCategories}
+        ListHeaderComponent={allTab}
+        renderItem={({item}) => tabs(item)}
+      />
       <FlatList
         data={stores}
+        windowSize={10}
         numColumns={2}
         columnWrapperStyle={{
           justifyContent: 'space-between',
@@ -136,6 +132,7 @@ const StoreDisplayScreen = ({}: Props) => {
           paddingHorizontal: 8,
         }}
         initialNumToRender={10}
+        maxToRenderPerBatch={30}
         renderItem={({item}) => (
           <View style={{width: '48.5%'}}>
             <View
