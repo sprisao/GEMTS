@@ -16,6 +16,8 @@ import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams
 import {useNavigation, useRoute} from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
+import DoubleTab from '../../../utils/DoubleTab';
+
 type StoreDisplayScreenNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
   'PlaceSecondLobby'
@@ -57,7 +59,7 @@ const StoreDisplayScreen = ({}: Props) => {
     function onError(error) {
       console.log(error);
     }
-    const _Stores = await storesRef.onSnapshot(querySnapshot => {
+    const _Stores = await storesRef.limit(20).onSnapshot(querySnapshot => {
       const stores = [];
       try {
         querySnapshot.forEach(documentSnapshot => {
@@ -146,7 +148,11 @@ const StoreDisplayScreen = ({}: Props) => {
         maxToRenderPerBatch={30}
         renderItem={({item}) => (
           // 여기서 나중에 높이 조절해야함 -> 스타일링 끝나고 마무리는 fixed height 설정 -> 렌더링 속도 업!
-          <View style={{width: '48.5%', height: 265}}>
+          <DoubleTab
+            delay={250}
+            onPress={() => console.log('한번 누름')}
+            doublePress={() => console.log('DoublePress')}
+            containerStyle={{width: '48.5%', height: 265}}>
             <View
               style={{
                 width: '100%',
@@ -167,7 +173,7 @@ const StoreDisplayScreen = ({}: Props) => {
                 영업시간 : {item.openHour} ~ {item.closeHour}
               </Text>
             </View>
-          </View>
+          </DoubleTab>
         )}
       />
     </View>
