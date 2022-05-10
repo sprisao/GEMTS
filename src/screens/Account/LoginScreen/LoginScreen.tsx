@@ -69,10 +69,6 @@ const LoginScreen = ({}: Props) => {
     try {
       await auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          navigation.navigate('Home');
-        })
-        // Todo : catch를 두번 사용할 필요가 있을까? JS문 내에서 해결되는지 시도해볼것
         .catch(error => {
           setLoading(false);
           if (error.code === 'auth/too-many-requests') {
