@@ -25,10 +25,10 @@ const PlaceSecondLobby = ({}: Props) => {
   const navigation = useNavigation<placeSecondLobbyNavigationProp>();
 
   const allSecondCategory = StoreSecondCat;
-  const givenFirstCategoryId = route.params.firstCategoryId;
+  const _firstCategoryId = route.params.firstCategoryId;
 
   const thisSecondCategories = allSecondCategory.filter(
-    item => item.firstCategoryId === givenFirstCategoryId,
+    item => item.firstCategoryId === _firstCategoryId,
   );
 
   const _renderItem = ({item}) => {
@@ -71,7 +71,7 @@ const PlaceSecondLobby = ({}: Props) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('StoreDisplay', {
-              firstCategoryId: 'none',
+              firstCategoryId: _firstCategoryId,
               initialFocus: 'all',
               secondCategoryId: 'all',
               secondCategories: thisSecondCategories,
