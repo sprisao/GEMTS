@@ -33,51 +33,40 @@ const StoreDisplayScreen = ({}: Props) => {
   const _initialFocus = route.params.initialFocus;
 
   const [stores, setStores] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [currentFocus, setCurrentFocus] = useState(_initialFocus);
 
   const tabRef = useRef();
 
   const thisUid = auth().currentUser.uid;
 
-  useEffect(() => {
-    getStores();
-  }, []);
+  /////////////////////// Data 가져오기 1차 시도
+  // useEffect(() => {
+  //   const storesRef = firestore()
+  //     .collection('stores_new')
+  //     .orderBy('preRating', 'desc')
+  //     .where('firstCategoryId', 'array-contains', _firstCategoryId);
 
-  const getStores = () => {
-    setIsLoading(true);
-    console.log('다운드러감');
+  //   const getStores = storesRef.onSnapshot(querySnapshot => {
+  //     const data = [];
 
-    const storesRef = firestore()
-      .collection('stores_new')
-      .limit(100)
-      .orderBy('preRating', 'desc')
-      .where('firstCategoryId', 'array-contains', _firstCategoryId);
+  //     querySnapshot.forEach(documentSnapshot => {
+  //       data.push({
+  //         ...documentSnapshot.data(),
+  //         id: documentSnapshot.id,
+  //       });
+  //       setStores(data);
+  //       setIsLoading(false);
+  //     });
+  //   });
 
-    function onError(error) {
-      console.log(error);
-    }
+  //   return () => getStores();
+  // }, []);
 
-    const _stores = storesRef.onSnapshot(querySnapshot => {
-      const stores = [];
+  // function onCategorySelect(e) {
+  //   setCurrentFocus(e);
+  // }
 
-      querySnapshot.forEach(documentSnapshot => {
-        console.log(documentSnapshot.data());
-        stores.push({
-          ...documentSnapshot.data(),
-          id: documentSnapshot.id,
-        });
-        setStores(stores);
-        setIsLoading(false);
-      });
-    }, onError);
-
-    return () => _stores();
-  };
-
-  function onCategorySelect(e) {
-    setCurrentFocus(e);
-  }
+  /////////////////// 2차 시도
 
   function allTab() {
     return (
