@@ -38,7 +38,6 @@ export default function StackNavigation() {
     return subscriber;
   }, []);
 
-  console.log(user);
   return (
     <AccountTabStack.Navigator
       screenOptions={{contentStyle: {backgroundColor: '#FFFFFF'}}}>

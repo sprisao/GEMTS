@@ -1,14 +1,9 @@
 import React from 'react';
 import {useState, useEffect, useRef, useMemo} from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {FlatList, View, Text, TouchableOpacity} from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
@@ -44,6 +39,8 @@ const StoreDisplayScreen = ({}: Props) => {
 
   const tabRef = useRef();
 
+  const thisUid = auth().currentUser.uid;
+
   useEffect(() => {
     getStores();
   }, []);
@@ -65,6 +62,7 @@ const StoreDisplayScreen = ({}: Props) => {
         querySnapshot.forEach(documentSnapshot => {
           stores.push({
             ...documentSnapshot.data(),
+            id: documentSnapshot.id,
           });
           setStores(stores);
           setIsLoading(false);
@@ -119,6 +117,10 @@ const StoreDisplayScreen = ({}: Props) => {
 
   const momoizedTabs = useMemo(() => tabs, [tabs]);
 
+  function likeHander(rec) {
+    console.log(rec.id);
+  }
+
   return (
     <View style={{}}>
       <FlatList
@@ -151,7 +153,7 @@ const StoreDisplayScreen = ({}: Props) => {
           <DoubleTab
             delay={250}
             onPress={() => console.log('한번 누름')}
-            doublePress={() => console.log('DoublePress')}
+            doublePress={() => likeHander(item)}
             containerStyle={{width: '48.5%', height: 265}}>
             <View
               style={{
