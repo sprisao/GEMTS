@@ -17,7 +17,6 @@ type StoreDisplayScreenNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
   'PlaceSecondLobby'
 >;
-
 type StoreDisplayScreenRouteProp = RouteProp<
   PlaceTabStackParamList,
   'PlaceSecondLobby'
@@ -45,34 +44,35 @@ const StoreDisplayScreen = ({}: Props) => {
     getStores();
   }, []);
 
-  const getStores = async () => {
+  const getStores = () => {
     setIsLoading(true);
+    console.log('다운드러감');
 
     const storesRef = firestore()
       .collection('stores_new')
+      .limit(100)
       .orderBy('preRating', 'desc')
       .where('firstCategoryId', 'array-contains', _firstCategoryId);
 
     function onError(error) {
       console.log(error);
     }
-    const _Stores = await storesRef.limit(20).onSnapshot(querySnapshot => {
+
+    const _stores = storesRef.onSnapshot(querySnapshot => {
       const stores = [];
-      try {
-        querySnapshot.forEach(documentSnapshot => {
-          stores.push({
-            ...documentSnapshot.data(),
-            id: documentSnapshot.id,
-          });
-          setStores(stores);
-          setIsLoading(false);
+
+      querySnapshot.forEach(documentSnapshot => {
+        console.log(documentSnapshot.data());
+        stores.push({
+          ...documentSnapshot.data(),
+          id: documentSnapshot.id,
         });
-      } catch (error) {
-        console.log(error);
-      }
+        setStores(stores);
+        setIsLoading(false);
+      });
     }, onError);
 
-    return () => _Stores();
+    return () => _stores();
   };
 
   function onCategorySelect(e) {
@@ -117,8 +117,34 @@ const StoreDisplayScreen = ({}: Props) => {
 
   const momoizedTabs = useMemo(() => tabs, [tabs]);
 
-  function likeHander(rec) {
-    console.log(rec.id);
+  function onDoubleTab(itemId, likes) {
+    const addUid = firestore.FieldValue.arrayUnion(thisUid);
+    const removeUid = firestore.FieldValue.arrayRemove(thisUid);
+    if (likes == undefined) {
+      firestore()
+        .collection('stores_new')
+        .doc(itemId)
+        .update({
+          likes: addUid,
+        })
+        .then(console.log('첫 좋아요'));
+    } else if (likes.includes(thisUid)) {
+      firestore()
+        .collection('stores_new')
+        .doc(itemId)
+        .update({
+          likes: removeUid,
+        })
+        .then(console.log('좋아요 취소'));
+    } else {
+      firestore()
+        .collection('stores_new')
+        .doc(itemId)
+        .update({
+          likes: addUid,
+        })
+        .then(console.log('좋아요'));
+    }
   }
 
   return (
@@ -153,7 +179,7 @@ const StoreDisplayScreen = ({}: Props) => {
           <DoubleTab
             delay={250}
             onPress={() => console.log('한번 누름')}
-            doublePress={() => likeHander(item)}
+            doublePress={() => onDoubleTab(item.id, item.likes)}
             containerStyle={{width: '48.5%', height: 265}}>
             <View
               style={{
@@ -169,6 +195,9 @@ const StoreDisplayScreen = ({}: Props) => {
             </View>
             <View style={{marginTop: 5}}>
               <Text>{item.shortAddr}</Text>
+              {item.likes && item.likes.length > 0 ? (
+                <Text>{item.likes.length}</Text>
+              ) : null}
               <Text style={{fontSize: 20}}>{item.name}</Text>
               <Text>프로필</Text>
               <Text>
