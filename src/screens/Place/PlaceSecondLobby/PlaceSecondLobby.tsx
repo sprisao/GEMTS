@@ -68,34 +68,6 @@ const PlaceSecondLobby = ({}: Props) => {
           paddingHorizontal: 10,
           paddingVertical: 20,
         }}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('StoreDisplay', {
-              firstCategoryId: _firstCategoryId,
-              initialFocus: 'all',
-              secondCategoryId: 'all',
-              secondCategories: thisSecondCategories,
-            })
-          }
-          style={{
-            width: '100%',
-            borderWidth: 0.5,
-            borderColor: '#dfdfdf',
-            borderRadius: 11,
-            marginBottom: 10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingHorizontal: 14,
-              paddingVertical: 12,
-            }}>
-            <Text style={{marginRight: 6}}>🅰️</Text>
-            <Text>전체</Text>
-          </View>
-        </TouchableOpacity>
         <FlatList
           columnWrapperStyle={{
             flex: 1,
