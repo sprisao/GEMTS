@@ -1,14 +1,9 @@
-import React from 'react';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Dimensions, FlatList, Text, TouchableOpacity, View} from 'react-native';
-
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
-import FastImage from 'react-native-fast-image';
 
 interface props {}
 
@@ -30,35 +25,33 @@ const StoreRender = ({}: props) => {
   const this1stCategoryId = route.params.firstCategoryId;
   const this2ndCategoryId = route.params.secondCategoryId;
   const this2ndCategoryPackage = route.params.secondCategories;
+  const this2endCatIds = this2ndCategoryPackage.map(item => item.id);
+  const focusedIndex = this2endCatIds.indexOf(this2ndCategoryId);
 
-  // useStates는 왠만하면 이 아래에서 처리해야 할 듯
-  // currentFocus는 id로 처리하고 스크롤은 index를 활용해야겠다.
-  const [currentFocus, setCurrentFocus] = useState(this2ndCategoryId);
+  const [currentFocus, setCurrentFocus] = useState(focusedIndex);
 
   function onCategorySelect(id, index) {
-    setCurrentFocus(id);
+    setCurrentFocus(index);
   }
 
-  function tabButton({item, index}) {
-    return (
-      <TouchableOpacity
-        onPress={() => onCategorySelect(item.id, index)}
-        key={item.id}
-        style={{
-          paddingHorizontal: 15,
-          paddingVertical: 14,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text
-          style={currentFocus == item.id ? {color: 'red'} : {color: 'white'}}>
-          {item.title}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
+  const tabButton = ({item, index}) => (
+    <TouchableOpacity
+      onPress={() => onCategorySelect(item.id, index)}
+      key={item.id}
+      style={{
+        paddingHorizontal: 15,
+        paddingVertical: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text style={currentFocus == index ? {color: 'red'} : {color: 'white'}}>
+        {item.title}
+      </Text>
+    </TouchableOpacity>
+  );
 
-  function CategoryPage({item, index}) {
+  function CategoryPage(props: {item: any; index: any}) {
+    let {item, index} = props;
     return (
       <View style={{width: deviceWidth, height: 300, backgroundColor: 'pink'}}>
         <Text>{item.title}</Text>
@@ -89,9 +82,10 @@ const StoreRender = ({}: props) => {
           return item.id;
         }}
         bounces={false}
-        horizontal
+        horizontal={true}
         showsHorizontalScrollIndicator={false}
         pagingEnabled={true}
+        initialScrollIndex={focusedIndex}
         initialNumToRender={1}
         getItemLayout={(data, index) => ({
           length: deviceWidth,
