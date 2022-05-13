@@ -58,7 +58,16 @@ const StoreRender = ({}: props) => {
     );
   }
 
+  function CategoryPage({item, index}) {
+    return (
+      <View style={{width: deviceWidth, height: 300, backgroundColor: 'pink'}}>
+        <Text>{item.title}</Text>
+      </View>
+    );
+  }
+
   const memoizedTabs = useMemo(() => tabButton, [tabButton]);
+  const memoizedPages = useMemo(() => CategoryPage, [CategoryPage]);
 
   return (
     <View>
@@ -73,6 +82,23 @@ const StoreRender = ({}: props) => {
           index,
         })}
         renderItem={memoizedTabs}></FlatList>
+      <FlatList
+        data={this2ndCategoryPackage}
+        renderItem={memoizedPages}
+        keyExtractor={item => {
+          return item.id;
+        }}
+        bounces={false}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled={true}
+        initialNumToRender={1}
+        getItemLayout={(data, index) => ({
+          length: deviceWidth,
+          offset: deviceWidth * index,
+          index,
+        })}
+      />
     </View>
   );
 };
