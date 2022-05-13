@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Platform,
 } from 'react-native';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -31,13 +32,22 @@ const StoreRender = ({}: props) => {
   // const mainDataSet = props.route.params.mainDataSet;
   // const currentLocation = props.route.params.location;
 
-  const dataSet = route.params.secondCategories;
-  console.log(route.params.secondCategories);
-  const initialIndex = [];
+  const this2ndCategoryPack = route.params.secondCategories;
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [initialIndex, setInitialIndex] = useState();
 
   const pageRef = useRef();
   const tabsRef = useRef();
+
+  // SecondLobby 에서 클릭한 카테고리 페이지 먼저 보여주도록
+  useEffect(() => {
+    const initialSelect = route.params.secondCategoryId;
+    this2ndCategoryPack.forEach((element, index) => {
+      if (element.id === initialSelect) {
+        setInitialIndex(index);
+      }
+    });
+  });
 
   // let localFilter;
   // if (currentLocation === '전체') {
@@ -73,16 +83,8 @@ const StoreRender = ({}: props) => {
   //
   // const dataSet = orderData(localFilter, 'secondCategory');
 
-  // const initialSelect = route.params.secondCategory;
-  //
-  // dataSet.forEach((element, index) => {
-  //   if (element.category === initialSelect) {
-  //     initialIndex.push(index);
-  //   }
-  // });
-
-  // 이벤트 해들러
-  const tabHandler = e => {
+  // 이벤트 핸들러
+  const onTabPress = e => {
     pageRef.current.scrollToIndex({
       animated: true,
       index: e,
@@ -90,12 +92,13 @@ const StoreRender = ({}: props) => {
     });
   };
 
-  const scrollHandler = e => {
+  const onSwipe = e => {
     const offset = e.nativeEvent.contentOffset.x;
     const pageIndex = Math.floor(offset / deviceWidth);
     const selectedIndex = Platform.OS === 'ios' ? pageIndex : pageIndex;
 
     setSelectedIndex(selectedIndex);
+
     if (offset > 0) {
       tabsRef.current.scrollToIndex({
         animated: true,
@@ -106,15 +109,9 @@ const StoreRender = ({}: props) => {
   };
 
   // 탭 렌더링
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const renderTabs = ({item, index}) => {
     return (
-      <TouchableOpacity
-        style={[
-          styles.tab,
-          {borderBottomWidth: index === selectedIndex ? 3 : 0},
-        ]}
-        onPress={() => tabHandler(index)}>
+      <TouchableOpacity style={[styles.tab]} onPress={() => onTabPress(index)}>
         <View style={styles.textContainer}>
           <Text
             style={[
@@ -132,18 +129,14 @@ const StoreRender = ({}: props) => {
   };
 
   // 각 2차카테고리별 페이지 렌더링
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const renderPage = ({item, index}) => {
     return (
       <View style={styles.page}>
-        {/*<GridWrapper*/}
-        {/*  data={item.data}*/}
-        {/*  navigation={props.navigation}*/}
-        {/*  route={props.route}></GridWrapper>*/}
         <Text>{item.title}</Text>
       </View>
     );
   };
+
   const memoizedPage = useMemo(() => renderPage, [renderPage]);
   const memoizedTabs = useMemo(() => renderTabs, [renderTabs]);
 
@@ -152,8 +145,8 @@ const StoreRender = ({}: props) => {
       <View style={styles.tabsContainer}>
         <FlatList
           ref={tabsRef}
-          data={dataSet}
-          keyExtractor={item => item.category}
+          data={this2ndCategoryPack}
+          keyExtractor={item => item.id}
           renderItem={memoizedTabs}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -164,19 +157,20 @@ const StoreRender = ({}: props) => {
           })}
         />
       </View>
+
       <FlatList
         ref={pageRef}
-        data={dataSet}
+        data={this2ndCategoryPack}
         keyExtractor={item => {
-          return item.category;
+          return item.id;
         }}
         renderItem={memoizedPage}
         bounces={false}
-        onScroll={scrollHandler}
+        onScroll={onSwipe}
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
-        initialScrollIndex={initialIndex[0]}
+        initialScrollIndex={initialIndex}
         initialNumToRender={1}
         getItemLayout={(data, index) => ({
           length: deviceWidth,
@@ -210,7 +204,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: 'black',
-    fontWeight: 'normal',
+    fontWeight: '500',
     letterSpacing: -0.25,
     fontSize: 13,
   },
