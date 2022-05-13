@@ -1,5 +1,12 @@
-import React, {useMemo, useState} from 'react';
-import {Dimensions, FlatList, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {
+  Dimensions,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from 'react-native';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -21,71 +28,155 @@ type StoreDisplayScreenRouteProp = RouteProp<
 const StoreRender = ({}: props) => {
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
+  // const mainDataSet = props.route.params.mainDataSet;
+  // const currentLocation = props.route.params.location;
 
-  const this1stCategoryId = route.params.firstCategoryId;
-  const this2ndCategoryId = route.params.secondCategoryId;
-  const this2ndCategoryPackage = route.params.secondCategories;
-  const this2endCatIds = this2ndCategoryPackage.map(item => item.id);
-  const focusedIndex = this2endCatIds.indexOf(this2ndCategoryId);
+  const dataSet = route.params.secondCategories;
+  console.log(route.params.secondCategories);
+  const initialIndex = [];
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const [currentFocus, setCurrentFocus] = useState(focusedIndex);
+  const pageRef = useRef();
+  const tabsRef = useRef();
 
-  function onCategorySelect(id, index) {
-    setCurrentFocus(index);
-  }
+  // let localFilter;
+  // if (currentLocation === '전체') {
+  //   localFilter = mainDataSet;
+  // } else {
+  //   localFilter = mainDataSet.filter(
+  //     item => item.eupmyeondongRi === currentLocation,
+  //   );
+  // }
 
-  const tabButton = ({item, index}) => (
-    <TouchableOpacity
-      onPress={() => onCategorySelect(item.id, index)}
-      key={item.id}
-      style={{
-        paddingHorizontal: 15,
-        paddingVertical: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text style={currentFocus == index ? {color: 'red'} : {color: 'white'}}>
-        {item.title}
-      </Text>
-    </TouchableOpacity>
-  );
+  const groupBy = function (data, key) {
+    return data.reduce(function (storage, item) {
+      const group = item[key];
+      storage[group] = storage[group] || [];
+      storage[group].push(item);
+      return storage;
+    }, {});
+  };
 
-  function CategoryPage(props: {item: any; index: any}) {
-    let {item, index} = props;
+  // const orderData = (data, key) => {
+  //   const container = [{category: '전체', data: localFilter}];
+  //   const preData = groupBy(data, key);
+  //   const getData = Object.entries(preData);
+  //
+  //   getData.forEach(element => {
+  //     container.push({
+  //       category: element[0],
+  //       data: element[1],
+  //     });
+  //   });
+  //   return container;
+  // };
+  //
+  // const dataSet = orderData(localFilter, 'secondCategory');
+
+  // const initialSelect = route.params.secondCategory;
+  //
+  // dataSet.forEach((element, index) => {
+  //   if (element.category === initialSelect) {
+  //     initialIndex.push(index);
+  //   }
+  // });
+
+  // 이벤트 해들러
+  const tabHandler = e => {
+    pageRef.current.scrollToIndex({
+      animated: true,
+      index: e,
+      viewPosition: 0,
+    });
+  };
+
+  const scrollHandler = e => {
+    const offset = e.nativeEvent.contentOffset.x;
+    const pageIndex = Math.floor(offset / deviceWidth);
+    const selectedIndex = Platform.OS === 'ios' ? pageIndex : pageIndex;
+
+    setSelectedIndex(selectedIndex);
+    if (offset > 0) {
+      tabsRef.current.scrollToIndex({
+        animated: true,
+        index: selectedIndex,
+        viewPosition: 0.5,
+      });
+    }
+  };
+
+  // 탭 렌더링
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const renderTabs = ({item, index}) => {
     return (
-      <View style={{width: deviceWidth, height: 300, backgroundColor: 'pink'}}>
+      <TouchableOpacity
+        style={[
+          styles.tab,
+          {borderBottomWidth: index === selectedIndex ? 3 : 0},
+        ]}
+        onPress={() => tabHandler(index)}>
+        <View style={styles.textContainer}>
+          <Text
+            style={[
+              styles.tabText,
+              {
+                opacity: index === selectedIndex ? 1 : 0.75,
+                color: index === selectedIndex ? 'red' : 'white',
+              },
+            ]}>
+            {item.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  // 각 2차카테고리별 페이지 렌더링
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const renderPage = ({item, index}) => {
+    return (
+      <View style={styles.page}>
+        {/*<GridWrapper*/}
+        {/*  data={item.data}*/}
+        {/*  navigation={props.navigation}*/}
+        {/*  route={props.route}></GridWrapper>*/}
         <Text>{item.title}</Text>
       </View>
     );
-  }
-
-  const memoizedTabs = useMemo(() => tabButton, [tabButton]);
-  const memoizedPages = useMemo(() => CategoryPage, [CategoryPage]);
+  };
+  const memoizedPage = useMemo(() => renderPage, [renderPage]);
+  const memoizedTabs = useMemo(() => renderTabs, [renderTabs]);
 
   return (
-    <View>
+    <View style={styles.screen}>
+      <View style={styles.tabsContainer}>
+        <FlatList
+          ref={tabsRef}
+          data={dataSet}
+          keyExtractor={item => item.category}
+          renderItem={memoizedTabs}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          getItemLayout={(data, index) => ({
+            length: 75,
+            offset: 75 * index,
+            index,
+          })}
+        />
+      </View>
       <FlatList
-        style={{backgroundColor: 'blue', height: 50, marginBottom: 8}}
-        horizontal
-        data={this2ndCategoryPackage}
-        showsHorizontalScrollIndicator={false}
-        getItemLayout={(data, index) => ({
-          length: 75,
-          offset: 75 * (index + 1),
-          index,
-        })}
-        renderItem={memoizedTabs}></FlatList>
-      <FlatList
-        data={this2ndCategoryPackage}
-        renderItem={memoizedPages}
+        ref={pageRef}
+        data={dataSet}
         keyExtractor={item => {
-          return item.id;
+          return item.category;
         }}
+        renderItem={memoizedPage}
         bounces={false}
-        horizontal={true}
+        onScroll={scrollHandler}
+        horizontal
         showsHorizontalScrollIndicator={false}
-        pagingEnabled={true}
-        initialScrollIndex={focusedIndex}
+        pagingEnabled
+        initialScrollIndex={initialIndex[0]}
         initialNumToRender={1}
         getItemLayout={(data, index) => ({
           length: deviceWidth,
@@ -98,3 +189,29 @@ const StoreRender = ({}: props) => {
 };
 
 export default StoreRender;
+
+const styles = StyleSheet.create({
+  screen: {flex: 1},
+  page: {width: deviceWidth},
+  tabsContainer: {height: 'auto', width: '100%', backgroundColor: 'blue'},
+  tab: {
+    width: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 7,
+  },
+  textContainer: {
+    width: 'auto',
+    height: 'auto',
+    borderBottomColor: 'blue',
+    paddingVertical: 5,
+    paddingHorizontal: 1,
+  },
+  tabText: {
+    color: 'black',
+    fontWeight: 'normal',
+    letterSpacing: -0.25,
+    fontSize: 13,
+  },
+});
