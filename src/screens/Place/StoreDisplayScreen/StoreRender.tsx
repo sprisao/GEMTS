@@ -12,6 +12,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
+import Page from './Page';
 
 interface props {}
 
