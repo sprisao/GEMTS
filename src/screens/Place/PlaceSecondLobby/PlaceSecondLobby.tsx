@@ -25,10 +25,10 @@ const PlaceSecondLobby = ({}: Props) => {
   const navigation = useNavigation<placeSecondLobbyNavigationProp>();
 
   const allSecondCategory = StoreSecondCat;
-  const givenFirstCategoryId = route.params.firstCategoryId;
+  const _firstCategoryId = route.params.firstCategoryId;
 
   const thisSecondCategories = allSecondCategory.filter(
-    item => item.firstCategoryId === givenFirstCategoryId,
+    item => item.firstCategoryId === _firstCategoryId,
   );
 
   const _renderItem = ({item}) => {
@@ -68,34 +68,6 @@ const PlaceSecondLobby = ({}: Props) => {
           paddingHorizontal: 10,
           paddingVertical: 20,
         }}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('StoreDisplay', {
-              firstCategoryId: 'none',
-              initialFocus: 'all',
-              secondCategoryId: 'all',
-              secondCategories: thisSecondCategories,
-            })
-          }
-          style={{
-            width: '100%',
-            borderWidth: 0.5,
-            borderColor: '#dfdfdf',
-            borderRadius: 11,
-            marginBottom: 10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingHorizontal: 14,
-              paddingVertical: 12,
-            }}>
-            <Text style={{marginRight: 6}}>🅰️</Text>
-            <Text>전체</Text>
-          </View>
-        </TouchableOpacity>
         <FlatList
           columnWrapperStyle={{
             flex: 1,
