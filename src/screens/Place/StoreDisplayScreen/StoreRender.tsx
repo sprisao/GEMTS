@@ -37,6 +37,9 @@ const StoreRender = ({}: props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [initialIndex, setInitialIndex] = useState();
 
+  const [lastDocument, setLastDocument] = useState();
+  const [data, setData] = useState([]);
+
   const pageRef = useRef();
   const tabsRef = useRef();
 
@@ -59,14 +62,14 @@ const StoreRender = ({}: props) => {
   //   );
   // }
 
-  const groupBy = function (data, key) {
-    return data.reduce(function (storage, item) {
-      const group = item[key];
-      storage[group] = storage[group] || [];
-      storage[group].push(item);
-      return storage;
-    }, {});
-  };
+  // const groupBy = function (data, key) {
+  //   return data.reduce(function (storage, item) {
+  //     const group = item[key];
+  //     storage[group] = storage[group] || [];
+  //     storage[group].push(item);
+  //     return storage;
+  //   }, {});
+  // };
 
   // const orderData = (data, key) => {
   //   const container = [{category: '전체', data: localFilter}];
