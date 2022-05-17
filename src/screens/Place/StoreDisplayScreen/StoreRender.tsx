@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   Text,
@@ -7,12 +8,15 @@ import {
   View,
   StyleSheet,
   Platform,
+  RefreshControl,
 } from 'react-native';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
-import Page from './Page';
+import firestore from '@react-native-firebase/firestore';
+import DoubleTab from '../../../utils/DoubleTab';
+import FastImage from 'react-native-fast-image';
 
 interface props {}
 
@@ -33,21 +37,20 @@ const StoreRender = ({}: props) => {
   // const mainDataSet = props.route.params.mainDataSet;
   // const currentLocation = props.route.params.location;
 
+  const this1stCategoryId = route.params.firstCategoryId;
   const this2ndCategoryPack = route.params.secondCategories;
+  const initialSelectId = route.params.secondCategoryId;
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [initialIndex, setInitialIndex] = useState();
-
-  const [lastDocument, setLastDocument] = useState();
-  const [data, setData] = useState([]);
 
   const pageRef = useRef();
   const tabsRef = useRef();
 
   // SecondLobby 에서 클릭한 카테고리 페이지 먼저 보여주도록
   useEffect(() => {
-    const initialSelect = route.params.secondCategoryId;
     this2ndCategoryPack.forEach((element, index) => {
-      if (element.id === initialSelect) {
+      if (element.id === initialSelectId) {
         setInitialIndex(index);
       }
     });
@@ -86,6 +89,89 @@ const StoreRender = ({}: props) => {
   // };
   //
   // const dataSet = orderData(localFilter, 'secondCategory');
+
+  let onEndReachedCalledDuringMomentum = false;
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMoreLoading, setIsMoreLoading] = useState(false);
+  const [lastDoc, setLastDoc] = useState(null);
+  const [stores, setStores] = useState([]);
+
+  const storesRef = firestore()
+    .collection('stores_new')
+    .orderBy('preRating', 'desc')
+    .where('firstCategoryId', 'array-contains', this1stCategoryId);
+
+  useEffect(() => {
+    getStores();
+  }, []);
+
+  const getStores = async () => {
+    setIsLoading(true);
+
+    const snapshot = await storesRef.limit(50).get();
+
+    if (!snapshot.empty) {
+      let _stores = [];
+      setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+
+      for (let i = 0; i < snapshot.docs.length; i++) {
+        _stores.push(snapshot.docs[i].data());
+      }
+
+      setStores(_stores);
+    } else {
+      setLastDoc(null);
+    }
+
+    setIsLoading(false);
+  };
+
+  const getMore = async () => {
+    if (lastDoc) {
+      setIsMoreLoading(true);
+      setTimeout(async () => {
+        let snapshot = await storesRef.startAfter(lastDoc).limit(100).get();
+
+        if (!snapshot.empty) {
+          let newRestaurants = stores;
+
+          setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+
+          for (let i = 0; i < snapshot.docs.length; i++) {
+            newRestaurants.push(snapshot.docs[i].data());
+          }
+
+          setStores(newRestaurants);
+          if (snapshot.docs.length < 3) {
+            setLastDoc(null);
+          }
+        } else {
+          setLastDoc(null);
+        }
+
+        setIsMoreLoading(false);
+      }, 200);
+    }
+    onEndReachedCalledDuringMomentum = true;
+  };
+
+  const onRefresh = () => {
+    setTimeout(() => {
+      getStores();
+    }, 1000);
+  };
+  const renderFooter = () => {
+    if (!isMoreLoading) return true;
+
+    return (
+      <ActivityIndicator
+        size="large"
+        color={'#D83E64'}
+        style={{marginBottom: 10}}
+      />
+    );
+  };
 
   // 이벤트 핸들러
   const onTabPress = e => {
@@ -132,11 +218,76 @@ const StoreRender = ({}: props) => {
     );
   };
 
+  // stores.map(item => console.log(item.secondCategoryId[0]));
+
   // 각 2차카테고리별 페이지 렌더링
   const renderPage = ({item, index}) => {
+    const filteredData = stores.filter(
+      data => data.secondCategoryId[0] == item.id,
+    );
+
     return (
       <View style={styles.page}>
-        <Text>{item.title}</Text>
+        <FlatList
+          data={item.id == 'all' ? stores : filteredData}
+          windowSize={2}
+          disableVirtualization={false}
+          numColumns={2}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={() => onRefresh()}
+            />
+          }
+          onEndReachedThreshold={0.7}
+          onMomentumScrollBegin={() => {
+            onEndReachedCalledDuringMomentum = false;
+          }}
+          onEndReached={() => {
+            if (!onEndReachedCalledDuringMomentum && !isMoreLoading) {
+              getMore();
+            }
+          }}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginBottom: 10,
+            paddingHorizontal: 8,
+          }}
+          initialNumToRender={20}
+          maxToRenderPerBatch={30}
+          ListFooterComponent={renderFooter}
+          renderItem={({item}) => (
+            <DoubleTab
+              delay={250}
+              onPress={() => console.log('한번 누름')}
+              doublePress={() => onDoubleTab(item.id, item.likes)}
+              containerStyle={{width: '48.5%', height: 265}}>
+              <View
+                style={{
+                  width: '100%',
+                  height: 185,
+                  borderRadius: 3,
+                  overflow: 'hidden',
+                }}>
+                <FastImage
+                  style={{width: '100%', height: '100%'}}
+                  source={{uri: item.images[0].url}}
+                />
+              </View>
+              <View style={{marginTop: 5}}>
+                <Text>{item.shortAddr}</Text>
+                {item.likes && item.likes.length > 0 ? (
+                  <Text>{item.likes.length}</Text>
+                ) : null}
+                <Text style={{fontSize: 20}}>{item.name}</Text>
+                <Text>프로필</Text>
+                <Text>
+                  영업시간 : {item.openHour} ~ {item.closeHour}
+                </Text>
+              </View>
+            </DoubleTab>
+          )}
+        />
       </View>
     );
   };
