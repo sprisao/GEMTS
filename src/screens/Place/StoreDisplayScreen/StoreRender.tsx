@@ -157,7 +157,7 @@ const StoreRender = ({}: props) => {
           }}
           onEndReached={() => {
             if (!onEndReachedCalledDuringMomentum && !isMoreLoading) {
-              getMore();
+              getMore(this1stCategoryId);
             }
           }}
           columnWrapperStyle={{
