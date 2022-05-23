@@ -18,6 +18,8 @@ import firestore from '@react-native-firebase/firestore';
 import DoubleTab from '../../../utils/DoubleTab';
 import FastImage from 'react-native-fast-image';
 
+import {useGlobalContext} from '../../../Contexts/placeContext.';
+
 interface props {}
 
 const deviceWidth = Dimensions.get('window').width;
@@ -32,6 +34,7 @@ type StoreDisplayScreenRouteProp = RouteProp<
 >;
 
 const StoreRender = ({}: props) => {
+  const {data_restaurants, data_cafes, data_others} = useGlobalContext();
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
   // const mainDataSet = props.route.params.mainDataSet;
