@@ -12,18 +12,16 @@ const PlaceProvider = ({children}) => {
   const [lastDoc, setLastDoc] = useState(null);
   const [stores, setStores] = useState([]);
 
-  const functionTest = () => {
-    console.log('눌러봐');
-  };
-  const getStores = async thisFirsCategory => {
-    console.log('thahaha', thisFirsCategory);
-    const storesRef = firestore()
+  const storesRef = category =>
+    firestore()
       .collection('stores_new')
       .orderBy('preRating', 'desc')
-      .where('firstCategoryId', 'array-contains', thisFirsCategory);
+      .where('firstCategoryId', 'array-contains', category);
+
+  const getStores = async thisFirstCategory => {
     setIsLoading(true);
 
-    const snapshot = await storesRef.limit(50).get();
+    const snapshot = await storesRef(thisFirstCategory).limit(50).get();
 
     if (!snapshot.empty) {
       let _stores = [];
@@ -41,11 +39,14 @@ const PlaceProvider = ({children}) => {
     setIsLoading(false);
   };
 
-  const getMore = async () => {
+  const getMore = async thisFirstCategory => {
     if (lastDoc) {
       setIsMoreLoading(true);
       setTimeout(async () => {
-        let snapshot = await storesRef.startAfter(lastDoc).limit(100).get();
+        let snapshot = await storesRef(thisFirstCategory)
+          .startAfter(lastDoc)
+          .limit(100)
+          .get();
 
         if (!snapshot.empty) {
           let newRestaurants = stores;
@@ -78,7 +79,7 @@ const PlaceProvider = ({children}) => {
         isLoading,
         getStores,
         getMore,
-        functionTest,
+        onEndReachedCalledDuringMomentum,
       }}>
       {children}
     </PlaceContext.Provider>
