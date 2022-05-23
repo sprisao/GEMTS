@@ -10,7 +10,7 @@ import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
 import ProfileScreen from '../src/screens/Account/ProfileScreen/ProfileScreen';
-import StoreDisplayScreen from '../src/screens/Place/StoreDisplayScreen/StoreRender';
+import StoreDisplayScreen from '../src/screens/Place/StoreDisplayScreen/CategoryScreen.js';
 import StoreDetailScreen from '../src/screens/Place/StoreDetailScreen/StoreDetailScreen';
 import ServiceDisplayScreen from '../src/screens/Place/ServiceDisplayScreen/ServiceDisplayScreen';
 import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/ServiceDetailScreen';
