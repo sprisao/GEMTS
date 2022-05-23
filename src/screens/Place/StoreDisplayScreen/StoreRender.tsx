@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
+  Button,
   ActivityIndicator,
   Dimensions,
   FlatList,
@@ -14,7 +15,6 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
-import firestore from '@react-native-firebase/firestore';
 import DoubleTab from '../../../utils/DoubleTab';
 import FastImage from 'react-native-fast-image';
 
@@ -34,7 +34,6 @@ type StoreDisplayScreenRouteProp = RouteProp<
 >;
 
 const StoreRender = ({}: props) => {
-  const {data_restaurants, data_cafes, data_others} = useGlobalContext();
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
   // const mainDataSet = props.route.params.mainDataSet;
@@ -59,105 +58,16 @@ const StoreRender = ({}: props) => {
     });
   });
 
-  // let localFilter;
-  // if (currentLocation === '전체') {
-  //   localFilter = mainDataSet;
-  // } else {
-  //   localFilter = mainDataSet.filter(
-  //     item => item.eupmyeondongRi === currentLocation,
-  //   );
-  // }
-
-  // const groupBy = function (data, key) {
-  //   return data.reduce(function (storage, item) {
-  //     const group = item[key];
-  //     storage[group] = storage[group] || [];
-  //     storage[group].push(item);
-  //     return storage;
-  //   }, {});
-  // };
-
-  // const orderData = (data, key) => {
-  //   const container = [{category: '전체', data: localFilter}];
-  //   const preData = groupBy(data, key);
-  //   const getData = Object.entries(preData);
-  //
-  //   getData.forEach(element => {
-  //     container.push({
-  //       category: element[0],
-  //       data: element[1],
-  //     });
-  //   });
-  //   return container;
-  // };
-  //
-  // const dataSet = orderData(localFilter, 'secondCategory');
-
   let onEndReachedCalledDuringMomentum = false;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
-  const [lastDoc, setLastDoc] = useState(null);
-  const [stores, setStores] = useState([]);
 
-  const storesRef = firestore()
-    .collection('stores_new')
-    .orderBy('preRating', 'desc')
-    .where('firstCategoryId', 'array-contains', this1stCategoryId);
+  const {getStores, stores, getMore} = useGlobalContext();
 
   useEffect(() => {
-    getStores();
+    getStores(this1stCategoryId);
   }, []);
-
-  const getStores = async () => {
-    setIsLoading(true);
-
-    const snapshot = await storesRef.limit(50).get();
-
-    if (!snapshot.empty) {
-      let _stores = [];
-      setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
-
-      for (let i = 0; i < snapshot.docs.length; i++) {
-        _stores.push(snapshot.docs[i].data());
-      }
-
-      setStores(_stores);
-    } else {
-      setLastDoc(null);
-    }
-
-    setIsLoading(false);
-  };
-
-  const getMore = async () => {
-    if (lastDoc) {
-      setIsMoreLoading(true);
-      setTimeout(async () => {
-        let snapshot = await storesRef.startAfter(lastDoc).limit(100).get();
-
-        if (!snapshot.empty) {
-          let newRestaurants = stores;
-
-          setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
-
-          for (let i = 0; i < snapshot.docs.length; i++) {
-            newRestaurants.push(snapshot.docs[i].data());
-          }
-
-          setStores(newRestaurants);
-          if (snapshot.docs.length < 3) {
-            setLastDoc(null);
-          }
-        } else {
-          setLastDoc(null);
-        }
-
-        setIsMoreLoading(false);
-      }, 200);
-    }
-    onEndReachedCalledDuringMomentum = true;
-  };
 
   const onRefresh = () => {
     setTimeout(() => {
@@ -228,7 +138,6 @@ const StoreRender = ({}: props) => {
     const filteredData = stores.filter(
       data => data.secondCategoryId[0] == item.id,
     );
-
     return (
       <View style={styles.page}>
         <FlatList
@@ -260,35 +169,37 @@ const StoreRender = ({}: props) => {
           maxToRenderPerBatch={30}
           ListFooterComponent={renderFooter}
           renderItem={({item}) => (
-            <DoubleTab
-              delay={250}
-              onPress={() => console.log('한번 누름')}
-              doublePress={() => onDoubleTab(item.id, item.likes)}
-              containerStyle={{width: '48.5%', height: 265}}>
-              <View
-                style={{
-                  width: '100%',
-                  height: 185,
-                  borderRadius: 3,
-                  overflow: 'hidden',
-                }}>
-                <FastImage
-                  style={{width: '100%', height: '100%'}}
-                  source={{uri: item.images[0].url}}
-                />
-              </View>
-              <View style={{marginTop: 5}}>
-                <Text>{item.shortAddr}</Text>
-                {item.likes && item.likes.length > 0 ? (
-                  <Text>{item.likes.length}</Text>
-                ) : null}
-                <Text style={{fontSize: 20}}>{item.name}</Text>
-                <Text>프로필</Text>
-                <Text>
-                  영업시간 : {item.openHour} ~ {item.closeHour}
-                </Text>
-              </View>
-            </DoubleTab>
+            <>
+              <DoubleTab
+                delay={250}
+                onPress={() => console.log('한번 누름')}
+                doublePress={() => onDoubleTab(item.id, item.likes)}
+                containerStyle={{width: '48.5%', height: 265}}>
+                <View
+                  style={{
+                    width: '100%',
+                    height: 185,
+                    borderRadius: 3,
+                    overflow: 'hidden',
+                  }}>
+                  <FastImage
+                    style={{width: '100%', height: '100%'}}
+                    source={{uri: item.images[0].url}}
+                  />
+                </View>
+                <View style={{marginTop: 5}}>
+                  <Text>{item.shortAddr}</Text>
+                  {item.likes && item.likes.length > 0 ? (
+                    <Text>{item.likes.length}</Text>
+                  ) : null}
+                  <Text style={{fontSize: 20}}>{item.name}</Text>
+                  <Text>프로필</Text>
+                  <Text>
+                    영업시간 : {item.openHour} ~ {item.closeHour}
+                  </Text>
+                </View>
+              </DoubleTab>
+            </>
           )}
         />
       </View>
