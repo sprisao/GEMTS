@@ -6,40 +6,35 @@ import FastImage from 'react-native-fast-image';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
-const DetailsMenu = ({storeData}) => {
+const DetailsMenu = ({storeId}) => {
   const {menu, menuLoading: isMenuLoading} = useGlobalContext();
   return (
     <View style={styles.menuContainer}>
       <View style={styles.menuWrapper}>
         <Text style={styles.menuHeader}>대표메뉴</Text>
         <View style={styles.menuItemWrapper}>
-          {menu.map(item => {
-            if (item.store_id[0] === storeData.id)
-              return (
-                <View style={styles.menuItem} key={item.menu}>
-                  <View style={styles.imageContainer}>
-                    <FastImage
-                      source={{uri: item.menuImage[0].url}}
-                      style={{width: '100%', height: '100%'}}
-                    />
-                  </View>
-                  <View style={styles.articleContainer}>
-                    <View style={styles.nameContaienr}>
-                      <Text style={styles.menuName}>{item.menu}</Text>
-                      {item.engMenu ? (
-                        <Text style={styles.engMenu}>{item.engMenu}</Text>
-                      ) : null}
-                    </View>
-                    <View style={styles.descContainer}>
-                      <Text style={styles.menuDesc}>{item.menuDesc}</Text>
-                    </View>
-                    <View>
-                      <Text style={styles.menuPrice}>{item.price}</Text>
-                    </View>
-                  </View>
-                </View>
-              );
-          })}
+          <View style={styles.menuItem}>
+            <View style={styles.imageContainer}>
+              <FastImage
+                source={{uri: menu[0].menuImage[0].url}}
+                style={{width: '100%', height: '100%'}}
+              />
+            </View>
+            <View style={styles.articleContainer}>
+              <View style={styles.nameContaienr}>
+                <Text style={styles.menuName}>{menu[0].menu}</Text>
+                {menu[0].engMenu ? (
+                  <Text style={styles.engMenu}>{menu[0].engMenu}</Text>
+                ) : null}
+              </View>
+              <View style={styles.descContainer}>
+                <Text style={styles.menuDesc}>{menu[0].menuDesc}</Text>
+              </View>
+              <View>
+                <Text style={styles.menuPrice}>{menu[0].price}</Text>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     </View>

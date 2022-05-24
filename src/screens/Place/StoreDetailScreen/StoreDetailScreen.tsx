@@ -53,7 +53,6 @@ const StoreDetailScreen = (props: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const storeData = route.params.data.item;
-  console.log('storeData', storeData.images);
 
   const markHandler = () => {
     setModalVisible(true);
@@ -178,7 +177,7 @@ const StoreDetailScreen = (props: Props) => {
             </ScrollView>
           </View>
         </View>
-        {storeData.isMenu ? <DetailsMenu storeData={storeData} /> : null}
+        {storeData.isMenu ? <DetailsMenu storeId={storeData.id} /> : null}
         {storeData.isPromotion ? (
           <View style={styles.curationContainer}>
             <View style={styles.videoContainer}>
@@ -237,16 +236,16 @@ const StoreDetailScreen = (props: Props) => {
             </View>
           </View>
         ) : null}
-        {storeData.instagramAccount ? (
+        {storeData.instaUrl ? (
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 Linking.openURL(
-                  `instagram://user?username=${storeData.instagramAccount}`,
+                  `instagram://user?username=${storeData.instaUrl}`,
                 ).catch(() => {
                   Linking.openURL(
-                    `https://www.instagram.com/${storeData.instagramAccount}`,
+                    `https://www.instagram.com/${storeData.instaUrl}`,
                   );
                 });
               }}>
@@ -256,9 +255,7 @@ const StoreDetailScreen = (props: Props) => {
                   style={{width: '100%', height: '100%'}}
                 />
               </View>
-              <Text style={styles.buttonText}>
-                @{storeData.instagramAccount}
-              </Text>
+              <Text style={styles.buttonText}>@{storeData.instaUrl}</Text>
             </TouchableOpacity>
           </View>
         ) : null}
