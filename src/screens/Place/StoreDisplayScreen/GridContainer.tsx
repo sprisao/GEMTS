@@ -1,10 +1,15 @@
 import React, {useMemo} from 'react';
-import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useGlobalContext} from '../../../Contexts/placeContext.';
-import {PlaceContext} from '../../../Contexts/placeContext.';
-import GridTile from './GridTile';
+import GridComponent from './GridComponent';
 
-const GridWrapper = props => {
+const GridContainer = props => {
   const {
     isLoading,
     getMore,
@@ -19,9 +24,9 @@ const GridWrapper = props => {
 
   const renderStoreGrid = data => {
     return (
-      <GridTile
+      <GridComponent
         name={data.item.name}
-        location={data.item.miniAddress}
+        location={data.item.shortAddr}
         rating={data.item.preRating}
         desc={data.item.shortDescription}
         image={data.item.images[0].url}
@@ -42,6 +47,12 @@ const GridWrapper = props => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedValue = useMemo(() => renderStoreGrid, [props.data]);
+
+  const renderFooter = () => {
+    if (!isMoreLoading) return true;
+
+    return <ActivityIndicator size="large" style={{marginBottom: 10}} />;
+  };
 
   return (
     <View style={styles.screen}>
@@ -64,6 +75,7 @@ const GridWrapper = props => {
         onMomentumScrollBegin={() => {
           setOnEndReachedCalledDuringMomentum(false);
         }}
+        ListFooterComponent={() => renderFooter()}
         onEndReached={() => {
           if (!onEndReachedCalledDuringMomentum && !isMoreLoading) {
             getMore(props.firstCategory);
@@ -75,7 +87,7 @@ const GridWrapper = props => {
   );
 };
 
-export default GridWrapper;
+export default GridContainer;
 
 const styles = StyleSheet.create({
   screen: {

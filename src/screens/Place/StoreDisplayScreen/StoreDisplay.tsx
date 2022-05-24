@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import GridWrapper from './GridWrapper';
+import GridContainer from './GridContainer';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -117,10 +117,10 @@ const CategoryScreen = props => {
   const renderPage = ({item, index}) => {
     return (
       <View style={styles.page}>
-        <GridWrapper
+        <GridContainer
           data={item.data}
           navigation={props.navigation}
-          route={props.route}></GridWrapper>
+          route={props.route}></GridContainer>
       </View>
     );
   };

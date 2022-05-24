@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 
 import Feather from 'react-native-vector-icons/Feather';
 
-const GridTile = props => {
+const GridComponent = props => {
   let preRank;
   if (props.rating > 8) {
     preRank = (
@@ -57,7 +57,6 @@ const GridTile = props => {
               <Text style={styles.location}>{props.location}</Text>
               <Text style={styles.name}>{props.name}</Text>
             </View>
-            {preRank}
             {businessHour}
           </View>
         </View>
@@ -66,7 +65,7 @@ const GridTile = props => {
   );
 };
 
-export default GridTile;
+export default GridComponent;
 
 const styles = StyleSheet.create({
   gridTile: {
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 180,
-    borderRadius: 7,
+    borderRadius: 3,
     resizeMode: 'cover',
   },
   articleContainer: {

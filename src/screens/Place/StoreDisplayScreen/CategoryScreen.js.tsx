@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 
-import GridWrapper from './GridWrapper';
+import GridContainer from './GridContainer';
 import {useGlobalContext} from '../../../Contexts/placeContext.';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -33,7 +33,6 @@ const CategoryScreen = props => {
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
 
-  // const mainDataSet = props.route.params.mainDataSet;
   const mainDataSet = stores;
   const currentLocation = props.route.params.location;
 
@@ -155,11 +154,11 @@ const CategoryScreen = props => {
     );
     return (
       <View style={styles.page}>
-        <GridWrapper
+        <GridContainer
           data={item.id == 'all' ? stores : filteredData}
           navigation={props.navigation}
           firstCategory={this1stCategoryId}
-          route={props.route}></GridWrapper>
+          route={props.route}></GridContainer>
       </View>
     );
   };
