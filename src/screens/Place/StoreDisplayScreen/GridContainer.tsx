@@ -33,12 +33,8 @@ const GridContainer = props => {
         openHour={data.item.openHour}
         closeHour={data.item.closeHour}
         onSecondSelect={() => {
-          props.navigation.navigate({
-            name: 'Details',
-            params: {
-              storeName: data.item.name,
-              storeDetails: data.item,
-            },
+          props.navigation.navigate('StoreDetail', {
+            data: data,
           });
         }}
       />

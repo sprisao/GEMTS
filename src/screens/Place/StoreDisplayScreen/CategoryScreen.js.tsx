@@ -156,7 +156,7 @@ const CategoryScreen = props => {
       <View style={styles.page}>
         <GridContainer
           data={item.id == 'all' ? stores : filteredData}
-          navigation={props.navigation}
+          navigation={navigation}
           firstCategory={this1stCategoryId}
           route={props.route}></GridContainer>
       </View>
