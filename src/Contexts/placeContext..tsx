@@ -5,8 +5,10 @@ import firestore from '@react-native-firebase/firestore';
 const PlaceContext = React.createContext();
 
 const PlaceProvider = ({children}) => {
-  let onEndReachedCalledDuringMomentum = false;
-
+  const [
+    onEndReachedCalledDuringMomentum,
+    setOnEndReachedCalledDuringMomentum,
+  ] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
   const [lastDoc, setLastDoc] = useState(null);
@@ -68,7 +70,7 @@ const PlaceProvider = ({children}) => {
         setIsMoreLoading(false);
       }, 200);
     }
-    onEndReachedCalledDuringMomentum = true;
+    setOnEndReachedCalledDuringMomentum(true);
   };
 
   return (
@@ -80,6 +82,7 @@ const PlaceProvider = ({children}) => {
         getStores,
         getMore,
         onEndReachedCalledDuringMomentum,
+        setOnEndReachedCalledDuringMomentum,
       }}>
       {children}
     </PlaceContext.Provider>

@@ -5,8 +5,13 @@ import {PlaceContext} from '../../../Contexts/placeContext.';
 import GridTile from './GridTile';
 
 const GridWrapper = props => {
-  const {isLoading, getMore, onEndReachedCalledDuringMomentum, isMoreLoading} =
-    useGlobalContext();
+  const {
+    isLoading,
+    getMore,
+    onEndReachedCalledDuringMomentum,
+    setOnEndReachedCalledDuringMomentum,
+    isMoreLoading,
+  } = useGlobalContext();
   let spotFilter = '';
   if (props.isSpot) {
     spotFilter = 'SpotDetails';
@@ -57,7 +62,7 @@ const GridWrapper = props => {
         }
         onEndReachedThreshold={0.7}
         onMomentumScrollBegin={() => {
-          onEndReachedCalledDuringMomentum = false;
+          setOnEndReachedCalledDuringMomentum(false);
         }}
         onEndReached={() => {
           if (!onEndReachedCalledDuringMomentum && !isMoreLoading) {
