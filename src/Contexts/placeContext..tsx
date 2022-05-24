@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState, useContext} from 'react';
 import firestore from '@react-native-firebase/firestore';
 
@@ -10,9 +10,21 @@ const PlaceProvider = ({children}) => {
     setOnEndReachedCalledDuringMomentum,
   ] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMenuLoading, setIsMenuLoading] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
   const [lastDoc, setLastDoc] = useState(null);
   const [stores, setStores] = useState([]);
+  const [menu, setMenu] = useState([]);
+
+  const menuRef = () => firestore().collection('menu');
+
+  useEffect(() => {
+    getMenu();
+  }, []);
+  const getMenu = async () => {
+    const data = await menuRef().get();
+    setMenu(data.docs.map(doc => ({...doc.data(), id: doc.id})));
+  };
 
   const storesRef = category =>
     firestore()
@@ -83,6 +95,8 @@ const PlaceProvider = ({children}) => {
         getMore,
         onEndReachedCalledDuringMomentum,
         setOnEndReachedCalledDuringMomentum,
+        menu,
+        isMenuLoading,
       }}>
       {children}
     </PlaceContext.Provider>
