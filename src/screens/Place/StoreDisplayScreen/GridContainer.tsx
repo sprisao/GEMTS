@@ -26,7 +26,7 @@ const GridContainer = props => {
     return (
       <GridComponent
         name={data.item.name}
-        location={data.item.shortAddr}
+        location={data.item.miniAddress}
         rating={data.item.preRating}
         desc={data.item.shortDescription}
         image={data.item.images[0].url}

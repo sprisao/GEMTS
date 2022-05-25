@@ -177,7 +177,9 @@ const StoreDetailScreen = (props: Props) => {
             </ScrollView>
           </View>
         </View>
-        {storeData.isMenu ? <DetailsMenu storeId={storeData.id} /> : null}
+        {storeData.isMenu ? (
+          <DetailsMenu storeId={storeData.record_id} />
+        ) : null}
         {storeData.isPromotion ? (
           <View style={styles.curationContainer}>
             <View style={styles.videoContainer}>

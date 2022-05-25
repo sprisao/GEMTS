@@ -57,6 +57,7 @@ const GridComponent = props => {
               <Text style={styles.location}>{props.location}</Text>
               <Text style={styles.name}>{props.name}</Text>
             </View>
+            {preRank}
             {businessHour}
           </View>
         </View>
