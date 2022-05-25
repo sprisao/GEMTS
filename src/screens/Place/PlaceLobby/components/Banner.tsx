@@ -1,5 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {StyleSheet, View, ScrollView, Dimensions} from 'react-native';
+
+import styled from 'styled-components/native';
+import {Dimensions} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -18,6 +20,37 @@ const ads = [
     url: 'https://dl.airtable.com/.attachmentThumbnails/85abf5b2d669bf1da20ab334cc7cf8e1/4c05cf78',
   },
 ];
+const BannerContainer = styled.View`
+  width: 100%;
+  height: 100px;
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
+const BannerScrollView = styled.ScrollView`
+  width: 100%;
+  height: 100%;
+`;
+
+const BulletContainer = styled.View`
+  width: 100%;
+  position: absolute;
+  bottom: 5px;
+  height: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Bullet = styled.View`
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  margin: 5px;
+  background-color: white;
+  opacity: ${props => props.isActive};
+`;
 
 const Banner = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -47,67 +80,30 @@ const Banner = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
+    <BannerContainer>
+      <BannerScrollView
         horizontal
         pagingEnabled
-        style={{width: '100%', height: '100%'}}
         onMomentumScrollEnd={scrollEnded}
         showsHorizontalScrollIndicator={false}
         ref={scrollRef}>
         {ads.map(item => (
           <FastImage
-            style={styles.bannerImage}
             key={item.id}
+            style={{width: DEVICE_WIDTH - 20, height: '100%'}}
             source={{
               uri: item.url,
             }}
           />
         ))}
-      </ScrollView>
-      <View style={styles.circleDiv}>
+      </BannerScrollView>
+      <BulletContainer>
         {ads.map((item, i) => (
-          <View
-            key={item.id}
-            style={[
-              styles.whiteCircle,
-              {opacity: i === selectedIndex ? 1 : 0.5},
-            ]}
-          />
+          <Bullet key={item.id} isActive={i === selectedIndex ? 1 : 0.5} />
         ))}
-      </View>
-    </View>
+      </BulletContainer>
+    </BannerContainer>
   );
 };
 
 export default Banner;
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: 100,
-    borderRadius: 5,
-    overflow: 'hidden',
-  },
-  bannerImage: {
-    width: DEVICE_WIDTH - 20,
-    height: '100%',
-  },
-  circleDiv: {
-    width: '100%',
-    position: 'absolute',
-    bottom: 5,
-    height: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  whiteCircle: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    margin: 5,
-    backgroundColor: 'white',
-  },
-});
