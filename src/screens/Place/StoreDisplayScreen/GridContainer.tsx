@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useGlobalContext} from '../../../Contexts/placeContext.';
+import {useGlobalContext} from '../../../contexts/placeContext.';
 import GridComponent from './GridComponent';
 
 const GridContainer = props => {
@@ -20,7 +20,9 @@ const GridContainer = props => {
   let spotFilter = '';
   if (props.isSpot) {
     spotFilter = 'SpotDetails';
-  } else spotFilter = 'Details';
+  } else {
+    spotFilter = 'Details';
+  }
 
   const renderStoreGrid = data => {
     return (
@@ -45,7 +47,9 @@ const GridContainer = props => {
   const memoizedValue = useMemo(() => renderStoreGrid, [props.data]);
 
   const renderFooter = () => {
-    if (!isMoreLoading) return true;
+    if (!isMoreLoading) {
+      return true;
+    }
 
     return <ActivityIndicator size="large" style={{marginBottom: 10}} />;
   };

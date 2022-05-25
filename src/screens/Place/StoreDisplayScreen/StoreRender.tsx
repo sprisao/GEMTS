@@ -18,7 +18,7 @@ import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams
 import DoubleTab from '../../../utils/DoubleTab';
 import FastImage from 'react-native-fast-image';
 
-import {useGlobalContext} from '../../../Contexts/placeContext.';
+import {useGlobalContext} from '../../../contexts/placeContext.';
 
 interface props {}
 
@@ -75,7 +75,9 @@ const StoreRender = ({}: props) => {
     }, 1000);
   };
   const renderFooter = () => {
-    if (!isMoreLoading) return true;
+    if (!isMoreLoading) {
+      return true;
+    }
 
     return (
       <ActivityIndicator

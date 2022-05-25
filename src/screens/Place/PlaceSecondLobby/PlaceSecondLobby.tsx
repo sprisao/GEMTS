@@ -7,7 +7,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useGlobalContext} from '../../../Contexts/placeContext.';
+import {useGlobalContext} from '../../../contexts/placeContext.';
 
 type placeSecondLobbyNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,

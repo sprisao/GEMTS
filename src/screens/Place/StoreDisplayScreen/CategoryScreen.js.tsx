@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import GridContainer from './GridContainer';
-import {useGlobalContext} from '../../../Contexts/placeContext.';
+import {useGlobalContext} from '../../../contexts/placeContext.';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -154,7 +154,8 @@ const CategoryScreen = props => {
           data={item.id == 'all' ? stores : filteredData}
           navigation={navigation}
           firstCategory={this1stCategoryId}
-          route={props.route}></GridContainer>
+          route={props.route}
+        />
       </View>
     );
   };

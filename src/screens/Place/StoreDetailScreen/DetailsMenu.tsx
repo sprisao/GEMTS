@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Platform} from 'react-native';
-import {useGlobalContext} from '../../../Contexts/placeContext.';
+import {useGlobalContext} from '../../../contexts/placeContext.';
 
 import FastImage from 'react-native-fast-image';
 
