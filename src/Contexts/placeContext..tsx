@@ -28,7 +28,7 @@ const PlaceProvider = ({children}) => {
 
   const storesRef = category =>
     firestore()
-      .collection('stores_new')
+      .collection('stores')
       .orderBy('preRating', 'desc')
       .where('firstCategoryId', 'array-contains', category);
 
