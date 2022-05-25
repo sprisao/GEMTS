@@ -194,17 +194,17 @@ const StoreDetailScreen = (props: Props) => {
                   }}
                 />
               )}
-              <Video
-                onReadyForDisplay={() => setIsPreloading(false)}
-                onLoadStart={() => setIsPreloading(true)}
-                style={styles.video}
-                source={{uri: storeData.promotionMedia[0].url}}
-                resizeMode="cover"
-                rate={1}
-                shouldPlay={true}
-                isLooping={true}
-                muted={true}
-              />
+              {/*<Video*/}
+              {/*  onReadyForDisplay={() => setIsPreloading(false)}*/}
+              {/*  onLoadStart={() => setIsPreloading(true)}*/}
+              {/*  style={styles.video}*/}
+              {/*  source={{uri: storeData.promotionMedia[0].url}}*/}
+              {/*  resizeMode="cover"*/}
+              {/*  rate={1}*/}
+              {/*  shouldPlay={true}*/}
+              {/*  isLooping={true}*/}
+              {/*  muted={true}*/}
+              {/*/>*/}
             </View>
             <Entypo
               name="chevron-small-down"
@@ -236,16 +236,16 @@ const StoreDetailScreen = (props: Props) => {
             </View>
           </View>
         ) : null}
-        {storeData.instaUrl ? (
+        {storeData.instagramAccount ? (
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 Linking.openURL(
-                  `instagram://user?username=${storeData.instaUrl}`,
+                  `instagram://user?username=${storeData.instagramAccount}`,
                 ).catch(() => {
                   Linking.openURL(
-                    `https://www.instagram.com/${storeData.instaUrl}`,
+                    `https://www.instagram.com/${storeData.instagramAccount}`,
                   );
                 });
               }}>
@@ -255,7 +255,9 @@ const StoreDetailScreen = (props: Props) => {
                   style={{width: '100%', height: '100%'}}
                 />
               </View>
-              <Text style={styles.buttonText}>@{storeData.instaUrl}</Text>
+              <Text style={styles.buttonText}>
+                @{storeData.instagramAccount}
+              </Text>
             </TouchableOpacity>
           </View>
         ) : null}
