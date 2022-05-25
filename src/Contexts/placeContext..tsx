@@ -35,7 +35,7 @@ const PlaceProvider = ({children}) => {
   const getStores = async thisFirstCategory => {
     setIsLoading(true);
 
-    const snapshot = await storesRef(thisFirstCategory).limit(50).get();
+    const snapshot = await storesRef(thisFirstCategory).limit(100).get();
 
     if (!snapshot.empty) {
       let _stores = [];

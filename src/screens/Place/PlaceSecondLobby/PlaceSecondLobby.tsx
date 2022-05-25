@@ -1,5 +1,5 @@
 import {TouchableOpacity, View, Text, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {StoreSecondCat} from '../../../../data/StoreSecondCat';
 
@@ -7,6 +7,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {useGlobalContext} from '../../../Contexts/placeContext.';
 
 type placeSecondLobbyNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
@@ -26,6 +27,11 @@ const PlaceSecondLobby = ({}: Props) => {
 
   const allSecondCategory = StoreSecondCat;
   const _firstCategoryId = route.params.firstCategoryId;
+  const {getStores, stores} = useGlobalContext();
+
+  useEffect(() => {
+    getStores(_firstCategoryId);
+  }, []);
 
   const thisSecondCategories = allSecondCategory.filter(
     item => item.firstCategoryId === _firstCategoryId,

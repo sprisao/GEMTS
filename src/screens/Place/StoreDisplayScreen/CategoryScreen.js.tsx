@@ -28,7 +28,7 @@ type StoreDisplayScreenRouteProp = RouteProp<
 >;
 
 const CategoryScreen = props => {
-  const {stores, getStores} = useGlobalContext();
+  const {stores} = useGlobalContext();
 
   const route = useRoute<StoreDisplayScreenRouteProp>();
   const navigation = useNavigation<StoreDisplayScreenNavigationProp>();
@@ -53,10 +53,6 @@ const CategoryScreen = props => {
       }
     });
   });
-
-  useEffect(() => {
-    getStores(this1stCategoryId);
-  }, []);
 
   let localFilter;
   if (currentLocation === '전체') {
@@ -195,7 +191,7 @@ const CategoryScreen = props => {
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         initialScrollIndex={initialIndex}
-        initialNumToRender={1}
+        initialNumToRender={3}
         getItemLayout={(data, index) => ({
           length: deviceWidth,
           offset: deviceWidth * index,
