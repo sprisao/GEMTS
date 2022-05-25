@@ -12,25 +12,11 @@ import {
 } from './components/PlaceLobbyButtons';
 
 import Banner from './components/Banner';
-
-const SafeAreaView = styled.SafeAreaView`
-  flex: 1;
-`;
-
-const ScrollView = styled.ScrollView`
-  flex: 1;
-  padding-top: 15px;
-`;
-
-const ButtonWrapper = styled.View`
-  display: flex;
-  width: 100%;
-  margin-bottom: 8px;
-  flex-direction: row;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-right: 10px;
-`;
+import {
+  SafeAreaView,
+  ScrollView,
+  ButtonsWrapper,
+} from '../../../styles/PlaceLobbyStyles';
 
 interface Props {}
 
@@ -39,7 +25,7 @@ const PlaceLobby = ({}: Props) => {
     <SafeAreaView>
       <PlaceLobbyHeader />
       <ScrollView>
-        <ButtonWrapper>
+        <ButtonsWrapper>
           <ButtonLarge
             name={'맛집'}
             message={'검색없이 한번에\n바로찾는 원주맛집'}
@@ -52,8 +38,8 @@ const PlaceLobby = ({}: Props) => {
             id={'rec1nohULLWQVqXZD'}
             emoji={FirstCategoryEmojis.cafe}
           />
-        </ButtonWrapper>
-        <ButtonWrapper>
+        </ButtonsWrapper>
+        <ButtonsWrapper>
           <ButtonMedium
             name={'젬 클래스'}
             id={'service'}
@@ -66,11 +52,11 @@ const PlaceLobby = ({}: Props) => {
             message={'젬이 소개하는\n보석같은 장소들'}
             emoji={FirstCategoryEmojis.curation}
           />
-        </ButtonWrapper>
-        <ButtonWrapper>
+        </ButtonsWrapper>
+        <ButtonsWrapper>
           <Banner />
-        </ButtonWrapper>
-        <ButtonWrapper>
+        </ButtonsWrapper>
+        <ButtonsWrapper>
           <ButtonSmall
             id="rectbHPCk3LZzfu6w"
             name="호프주점"
@@ -95,8 +81,8 @@ const PlaceLobby = ({}: Props) => {
             emoji={FirstCategoryEmojis.studio}
             message={''}
           />
-        </ButtonWrapper>
-        <ButtonWrapper>
+        </ButtonsWrapper>
+        <ButtonsWrapper>
           <ButtonSmall
             id="rec9dQcEElsgcAsD7"
             name="반려동물"
@@ -121,7 +107,7 @@ const PlaceLobby = ({}: Props) => {
             emoji={FirstCategoryEmojis.education}
             message={''}
           />
-        </ButtonWrapper>
+        </ButtonsWrapper>
       </ScrollView>
     </SafeAreaView>
   );
