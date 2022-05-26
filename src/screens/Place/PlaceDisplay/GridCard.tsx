@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 
 import Feather from 'react-native-vector-icons/Feather';
 
-const GridComponent = props => {
+const GridCard = props => {
   let preRank;
   if (props.rating > 8) {
     preRank = (
@@ -66,7 +66,7 @@ const GridComponent = props => {
   );
 };
 
-export default GridComponent;
+export default GridCard;
 
 const styles = StyleSheet.create({
   gridTile: {

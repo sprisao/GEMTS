@@ -7,10 +7,11 @@ import {
   View,
 } from 'react-native';
 import {useGlobalContext} from '../../../contexts/placeContext.';
-import GridComponent from './GridComponent';
+import GridCard from './GridCard';
 
 const GridContainer = props => {
   const {
+    getStores,
     isLoading,
     getMore,
     onEndReachedCalledDuringMomentum,
@@ -26,7 +27,7 @@ const GridContainer = props => {
 
   const renderStoreGrid = data => {
     return (
-      <GridComponent
+      <GridCard
         name={data.item.name}
         location={data.item.miniAddress}
         rating={data.item.preRating}
@@ -45,6 +46,12 @@ const GridContainer = props => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedValue = useMemo(() => renderStoreGrid, [props.data]);
+
+  const onRefresh = () => {
+    setTimeout(() => {
+      getStores(props.firstCategory);
+    }, 1000);
+  };
 
   const renderFooter = () => {
     if (!isMoreLoading) {

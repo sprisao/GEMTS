@@ -8,7 +8,7 @@ import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
 import ProfileScreen from '../src/screens/Account/ProfileScreen/ProfileScreen';
-import StoreDisplayScreen from '../src/screens/Place/PlaceDisplay/CategoryScreen.js';
+import StoreDisplayScreen from '../src/screens/Place/PlaceDisplay/PlaceDisplayScreen';
 import StoreDetailScreen from '../src/screens/Place/PlaceDetail/StoreDetailScreen';
 import ServiceDisplayScreen from '../src/screens/Service/ServiceDisplayScreen/ServiceDisplayScreen';
 import ServiceDetailScreen from '../src/screens/Service/ServiceDetailScreen/ServiceDetailScreen';
