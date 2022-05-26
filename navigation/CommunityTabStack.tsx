@@ -8,10 +8,10 @@ import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
 import ProfileScreen from '../src/screens/Account/ProfileScreen/ProfileScreen';
-import StoreDisplayScreen from '../src/screens/Place/StoreDisplayScreen/StoreDisplayScreen';
-import StoreDetailScreen from '../src/screens/Place/StoreDetailScreen/StoreDetailScreen';
-import ServiceDisplayScreen from '../src/screens/Place/ServiceDisplayScreen/ServiceDisplayScreen';
-import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/ServiceDetailScreen';
+import StoreDisplayScreen from '../src/screens/Place/PlaceDisplay/CategoryScreen.js';
+import StoreDetailScreen from '../src/screens/Place/PlaceDetail/StoreDetailScreen';
+import ServiceDisplayScreen from '../src/screens/Service/ServiceDisplayScreen/ServiceDisplayScreen';
+import ServiceDetailScreen from '../src/screens/Service/ServiceDetailScreen/ServiceDetailScreen';
 import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/CurationDisplayScreen';
 
 type RootStackParamList = {

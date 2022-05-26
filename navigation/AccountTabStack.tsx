@@ -8,8 +8,8 @@ import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
 import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
 import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
 import ProfileScreen from '../src/screens/Account/ProfileScreen/ProfileScreen';
-import StoreDetailScreen from '../src/screens/Place/StoreDetailScreen/StoreDetailScreen';
-import ServiceDetailScreen from '../src/screens/Place/ServiceDetailScreen/ServiceDetailScreen';
+import StoreDetailScreen from '../src/screens/Place/PlaceDetail/StoreDetailScreen';
+import ServiceDetailScreen from '../src/screens/Service/ServiceDetailScreen/ServiceDetailScreen';
 
 type RootStackParamList = {
   PlaceLobby: undefined;
@@ -28,6 +28,7 @@ const AccountTabStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function StackNavigation() {
   const [user, setUser] = useState();
+
   function onAuthStateChanged() {
     const thisUser = auth().currentUser;
     setUser(thisUser);
