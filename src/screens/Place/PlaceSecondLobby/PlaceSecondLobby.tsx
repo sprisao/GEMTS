@@ -9,6 +9,16 @@ import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useGlobalContext} from '../../../contexts/placeContext.';
 
+import {
+  MainScreen,
+  SecondCategoriesGrid,
+  SecondCategoriesWrapper,
+  SecondCategoryButton,
+  SecondCategoryButtonEmoji,
+  SecondCategoryButtonName,
+  SecondCategoryButtonWrapper,
+} from '../../../styles/PlaceSecondLobbyStyles';
+
 type placeSecondLobbyNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
   'PlaceSecondLobby'
@@ -32,14 +42,13 @@ const PlaceSecondLobby = ({}: Props) => {
   useEffect(() => {
     getStores(_firstCategoryId);
   }, []);
-
   const thisSecondCategories = allSecondCategory.filter(
     item => item.firstCategoryId === _firstCategoryId,
   );
 
   const _renderItem = ({item}) => {
     return (
-      <TouchableOpacity
+      <SecondCategoryButton
         onPress={() =>
           navigation.navigate('StoreDisplay', {
             firstCategoryId: item.firstCategoryId,
@@ -47,46 +56,26 @@ const PlaceSecondLobby = ({}: Props) => {
             secondCategoryId: item.id,
             secondCategories: thisSecondCategories,
           })
-        }
-        style={{
-          width: '49%',
-          borderWidth: 0.5,
-          borderColor: '#dfdfdf',
-          borderRadius: 11,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 14,
-            paddingVertical: 12,
-          }}>
-          <Text style={{marginRight: 6}}>{item.emoji}</Text>
-          <Text>{item.title}</Text>
-        </View>
-      </TouchableOpacity>
+        }>
+        <SecondCategoryButtonWrapper>
+          <SecondCategoryButtonEmoji>{item.emoji}</SecondCategoryButtonEmoji>
+          <SecondCategoryButtonName>{item.title}</SecondCategoryButtonName>
+        </SecondCategoryButtonWrapper>
+      </SecondCategoryButton>
     );
   };
 
   return (
-    <View>
-      <View
-        style={{
-          paddingHorizontal: 10,
-          paddingVertical: 20,
-        }}>
-        <FlatList
-          columnWrapperStyle={{
-            flex: 1,
-            justifyContent: 'space-between',
-            marginBottom: 10,
-          }}
+    <MainScreen>
+      <SecondCategoriesWrapper>
+        <SecondCategoriesGrid
           data={thisSecondCategories}
           keyExtractor={item => item.id}
           renderItem={_renderItem}
           numColumns={2}
         />
-      </View>
-    </View>
+      </SecondCategoriesWrapper>
+    </MainScreen>
   );
 };
 
