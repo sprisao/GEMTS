@@ -99,3 +99,72 @@ export const ButtonMediumRight = styled.View`
 `;
 
 //Button-Small
+
+export const GEMSECTION = styled.View``;
+
+export const GEMButtonCover = styled.View`
+  width: 100%;
+  padding: 8px 15px;
+`;
+
+export const GEMButton = styled.TouchableOpacity`
+  display: flex;
+  background-color: white;
+  height: 65px;
+  border-radius: 12px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  //shadowColor: '#000',
+  //shadowOffset: {
+  //  width: 0,
+  //  height: 3
+  //},
+  //shadowOpacity: 0.1,
+  //shadowRadius: 10,
+  //elevation: 5,
+`;
+
+export const GEMButtonImageBox = styled.View`
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+`;
+
+export const GEMButtonImage = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
+
+export const GEMButtonText = styled.Text`
+  //font-family: 'Apple SD Gothic Neo', sans-serif;
+  color: black;
+  font-size: 15px;
+  letter-spacing: -0.25px;
+`;
+
+export const StampSection = styled.View`
+  width: 100%;
+  height: auto;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-direction: row;
+`;
+export const StampText = styled.Text`
+  //font-family: 'Apple SD Gothic Neo', sans-serif;
+  color: #666;
+`;
+
+export const StampLogoContainer = styled.View`
+  width: 25px;
+  height: 27px;
+  margin-left: 5px;
+  padding: 3px;
+`;
+
+export const StampLogoImage = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
