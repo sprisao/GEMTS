@@ -1,6 +1,5 @@
 import React from 'react';
-
-import styled from 'styled-components/native';
+import {Linking} from 'react-native';
 
 import {FirstCategoryEmojis} from '../../../constants/Assets';
 
@@ -16,7 +15,18 @@ import {
   SafeAreaView,
   ScrollView,
   ButtonsWrapper,
+  GEMButton,
+  GEMButtonImageBox,
+  GEMButtonCover,
+  GEMButtonText,
+  GEMButtonImage,
+  GEMSECTION,
+  StampText,
+  StampLogoContainer,
+  StampLogoImage,
+  StampSection,
 } from '../../../styles/PlaceLobbyStyles';
+import Footer from '../../../constants/Footer';
 
 interface Props {}
 
@@ -108,6 +118,47 @@ const PlaceLobby = ({}: Props) => {
             message={''}
           />
         </ButtonsWrapper>
+        <GEMSECTION>
+          <GEMButtonCover>
+            <GEMButton
+              onPress={() => {
+                Linking.openURL('https://pf.kakao.com/_FCGCs/chat').catch(
+                  () => {
+                    'https://pf.kakao.com/_FCGCs/chat';
+                  },
+                );
+              }}>
+              <GEMButtonImageBox>
+                <GEMButtonImage
+                  source={require('../../../../assets/images/emojis/ask.png')}
+                />
+              </GEMButtonImageBox>
+              <GEMButtonText>가게 홍보 및 등록 문의</GEMButtonText>
+            </GEMButton>
+          </GEMButtonCover>
+          <GEMButtonCover>
+            <GEMButton
+              onPress={() => {
+                onShare();
+              }}>
+              <GEMButtonImageBox>
+                <GEMButtonImage
+                  source={require('../../../../assets/images/emojis/heart.png')}
+                />
+              </GEMButtonImageBox>
+              <GEMButtonText>친구에게도 젬 알려주기!</GEMButtonText>
+            </GEMButton>
+          </GEMButtonCover>
+        </GEMSECTION>
+        <StampSection>
+          <StampText>Powered by</StampText>
+          <StampLogoContainer>
+            <StampLogoImage
+              source={require('../../../../assets/images/BI/LogoGrey.png')}
+            />
+          </StampLogoContainer>
+        </StampSection>
+        <Footer />
       </ScrollView>
     </SafeAreaView>
   );
