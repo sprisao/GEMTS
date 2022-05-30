@@ -1,12 +1,25 @@
 import styled from 'styled-components/native';
 
 export const SafeAreaView = styled.SafeAreaView`
-  flex: 1;
+  background-color: #f6f6f6;
 `;
 
 export const ScrollView = styled.ScrollView`
-  flex: 1;
-  padding-top: 15px;
+  z-index: 0;
+`;
+
+export const ScrollWrapper = styled.View`
+  background-color: #f6f6f6;
+`;
+
+export const ContentsWrapper = styled.View`
+  z-index: 1;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background-color: white;
+  padding-top: 70px;
 `;
 
 export const ButtonsWrapper = styled.View`

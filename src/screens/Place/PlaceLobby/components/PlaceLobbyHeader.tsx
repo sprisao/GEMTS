@@ -1,34 +1,35 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import styled from 'styled-components/native';
+import {View, Text, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {Logo} from '../../../../constants/Assets';
 
-const HeaderContainer = styled.View`
-  display: flex;
-  justify-content: center;
-  border-bottom: solid, 1px;
-`;
-
 export default function PlaceLobbyHeader() {
   return (
-    <HeaderContainer
+    <View
       style={{
+        position: 'absolute',
+        ...Platform.select({
+          ios: {paddingTop: 50},
+          android: {paddingTop: 5},
+        }),
+        width: '100%',
+        paddingHorizontal: 10,
+        paddingVertical: 15,
+        backgroundColor: 'purple',
         shadowColor: '#000',
-        shadowOffset: {width: 0, height: 6},
-        shadowOpacity: 0.15,
-        shadowRadius: 3,
+        shadowOffset: {width: 0, height: 10},
+        shadowOpacity: 0.25,
+        shadowRadius: 5,
         elevation: 5,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        backgroundColor: 'white',
+        zIndex: 2,
       }}>
       <View
         style={{
-          padding: 17,
+          width: '100%',
           flexDirection: 'row',
-          alignItems: 'center',
           justifyContent: 'space-between',
         }}>
         <View style={{flexDirection: 'row', height: '100%'}}>
@@ -55,15 +56,16 @@ export default function PlaceLobbyHeader() {
             <Text
               style={{
                 fontSize: 18,
+                color: 'white',
               }}>
               강원도 원주시 {'>'}
             </Text>
           </View>
         </View>
         <View>
-          <IonIcons name="notifications-outline" size={25} />
+          <IonIcons name="notifications-outline" size={25} color={'white'} />
         </View>
       </View>
-    </HeaderContainer>
+    </View>
   );
 }
