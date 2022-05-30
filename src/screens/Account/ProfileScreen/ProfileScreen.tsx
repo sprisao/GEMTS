@@ -1,4 +1,4 @@
-import {ScrollView, Text, View, Button, Image} from 'react-native';
+import {ScrollView, Text, View, Button} from 'react-native';
 import React from 'react';
 import auth from '@react-native-firebase/auth';
 
@@ -58,9 +58,19 @@ const ProfileScreen = ({}: Props) => {
             }}
           />
         </PROFILE_IMAGE_CONTAINER>
-        <View style={{paddingHorizontal: 10, flexDirection: 'column'}}>
+        <View
+          style={{
+            paddingHorizontal: 10,
+            flexDirection: 'column',
+            width: '50%',
+          }}>
           <Text>@sprisao</Text>
-          <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}>
             <View>
               <Text>Follower</Text>
               <Text>120</Text>
@@ -70,6 +80,41 @@ const ProfileScreen = ({}: Props) => {
               <Text>33</Text>
             </View>
           </View>
+          <View>
+            <Text>동네친구</Text>
+            <Text>카테고리별 방문 :</Text>
+          </View>
+        </View>
+      </View>
+      <View>
+        <View>
+          <View>
+            <Text>최근 방문한 곳</Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: 'yellow',
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+            }}>
+            <Text>・ 🧆 안432.. (일주일 전) </Text>
+            <Text>・ 🥘 까치둥지.. (한달 전) </Text>
+            <Text>・ ☕️ 코헨쇼룸.. (두달 전) </Text>
+          </View>
+        </View>
+        <View>
+          <View>
+            <Text>Reviews</Text>
+          </View>
+          <View style={{height: 50, backgroundColor: 'yellow'}}>
+            <Text>리뷰 공감: </Text>
+          </View>
+        </View>
+        <View>
+          <View>
+            <Text>참여 중인 커뮤니티</Text>
+          </View>
+          <View style={{height: 50, backgroundColor: 'yellow'}}></View>
         </View>
       </View>
       <Button onPress={() => handleLogout()} title="로그아웃" />
