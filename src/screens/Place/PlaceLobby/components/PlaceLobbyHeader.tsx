@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Platform} from 'react-native';
+import {Platform, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import {Logo} from '../../../../constants/Assets';
@@ -10,7 +10,7 @@ export default function PlaceLobbyHeader() {
       style={{
         position: 'absolute',
         ...Platform.select({
-          ios: {paddingTop: 50},
+          ios: {paddingTop: 60},
           android: {paddingTop: 5},
         }),
         width: '100%',

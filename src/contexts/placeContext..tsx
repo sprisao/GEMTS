@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import {useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 
 const PlaceContext = React.createContext();
@@ -28,7 +27,7 @@ const PlaceProvider = ({children}) => {
 
   const storesRef = category =>
     firestore()
-      .collection('stores')
+      .collection('places')
       .orderBy('preRating', 'desc')
       .where('firstCategoryId', 'array-contains', category);
 
