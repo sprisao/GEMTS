@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions, Platform} from 'react-native';
+import {Dimensions, Platform, StyleSheet, Text, View} from 'react-native';
 import {useGlobalContext} from '../../../contexts/placeContext.';
 
 import FastImage from 'react-native-fast-image';
@@ -10,7 +10,6 @@ const DetailsMenu = ({storeId}) => {
   const {menu, menuLoading: isMenuLoading} = useGlobalContext();
 
   const thisMenu = menu.filter(item => item.store_id[0] === storeId);
-  console.log(thisMenu.length);
   return (
     <View style={styles.menuContainer}>
       <View style={styles.menuWrapper}>

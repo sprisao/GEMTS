@@ -3,16 +3,6 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import CommunityLobby from '../src/screens/Community/CommunityLobby';
-import PlaceLobby from '../src/screens/Place/PlaceLobby/PlaceLobby';
-import LoginScreen from '../src/screens/Account/LoginScreen/LoginScreen';
-import RegisterScreen from '../src/screens/Account/RegisterScreen/RegisterScreen';
-import PwResetScreen from '../src/screens/Account/PwResetScreen/PwResetScreen';
-import ProfileScreen from '../src/screens/Account/ProfileScreen/ProfileScreen';
-import StoreDisplayScreen from '../src/screens/Place/PlaceDisplay/PlaceDisplayScreen';
-import StoreDetailScreen from '../src/screens/Place/PlaceDetail/StoreDetailScreen';
-import ServiceDisplayScreen from '../src/screens/Service/ServiceDisplayScreen/ServiceDisplayScreen';
-import ServiceDetailScreen from '../src/screens/Service/ServiceDetailScreen/ServiceDetailScreen';
-import CurationDisplayScreen from '../src/screens/Place/CurationDisplayScreen/CurationDisplayScreen';
 
 type RootStackParamList = {
   CommunityLobby: undefined;
@@ -36,58 +26,8 @@ export default function StackNavigation() {
       initialRouteName="CommunityLobby"
       screenOptions={{contentStyle: {backgroundColor: '#FFFFFF'}}}>
       <CommunityTabStack.Screen
-        name="CommunityLobby"
+        name="이벤트&할인"
         component={CommunityLobby}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="PlaceLobby"
-        component={PlaceLobby}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="PwReset"
-        component={PwResetScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="StoreDisplay"
-        component={StoreDisplayScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="StoreDetail"
-        component={StoreDetailScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="ServiceDisplay"
-        component={ServiceDisplayScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="ServiceDetail"
-        component={ServiceDetailScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{}}
-      />
-      <CommunityTabStack.Screen
-        name="CurationDisplay"
-        component={CurationDisplayScreen}
         options={{}}
       />
     </CommunityTabStack.Navigator>

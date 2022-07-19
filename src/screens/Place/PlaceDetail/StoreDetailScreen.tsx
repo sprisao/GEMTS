@@ -1,16 +1,16 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  StyleSheet,
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
+  ActivityIndicator,
   Dimensions,
   Linking,
-  ActivityIndicator,
-  Platform,
   Modal,
+  Platform,
   Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -22,13 +22,11 @@ import DetailsInfo from './DetailsInfo';
 import HeaderRight from './HeaderRight';
 
 import FastImage from 'react-native-fast-image';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
-
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RouteProp} from '@react-navigation/native';
-import {PlaceTabStackParamList} from '../../../../navigation/PlaceTabStackParams';
-import {useNavigation, useRoute} from '@react-navigation/native';
 
 type PlaceNavigationProp = NativeStackNavigationProp<
   PlaceTabStackParamList,
@@ -71,7 +69,9 @@ const StoreDetailScreen = (props: Props) => {
     preRank = <Text style={styles.medals}>🏅🏅</Text>;
   } else if (storeData.preRating > 3) {
     preRank = <Text style={styles.medals}>🏅</Text>;
-  } else preRank = null;
+  } else {
+    preRank = null;
+  }
 
   const items = ['상세정보'];
   if (storeData.isMenu) {
@@ -144,15 +144,17 @@ const StoreDetailScreen = (props: Props) => {
         </View>
         <View style={styles.imagesContainer}>
           <View style={styles.circleDiv}>
-            {storeData.images.map((item, i) => (
-              <View
-                key={item.id}
-                style={[
-                  styles.whiteCircle,
-                  {opacity: i === selectedIndex ? 1 : 0.5},
-                ]}
-              />
-            ))}
+            {storeData.images.map((item, i) => {
+              return (
+                <View
+                  key={i}
+                  style={[
+                    styles.whiteCircle,
+                    {opacity: i === selectedIndex ? 1 : 0.5},
+                  ]}
+                />
+              );
+            })}
           </View>
           <View style={styles.imageWrapper}>
             <ScrollView
@@ -164,7 +166,7 @@ const StoreDetailScreen = (props: Props) => {
               {storeData.images.map(item => {
                 return (
                   <FastImage
-                    key={item.id}
+                    key={item.url}
                     style={{
                       width: DEVICE_WIDTH - 30,
                       height: '100%',
